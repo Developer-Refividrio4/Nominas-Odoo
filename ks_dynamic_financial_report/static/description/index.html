@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <title>Odoo</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+    <link href="https://apps.odoocdn.com/web/content/7247337-184ae0e/1/web.assets_frontend.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <!-- Bootstrap 5 CSS cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card-header .card-title img {
+            transform: rotate(180deg);
+        }
+
+        .card-header.collapsed .card-title img {
+            transform: rotate(0deg);
+        }
+    </style>
+</head>
+<!-- odoo description page css -->
+
+<body>
+    <!-- Header -->
+    <main class="container">
+
+        <div class="container py-5 oe_styling_v8" id="loempia_tabs"
+            style="color: #0b3b52;font-family: 'Open sans','sans-serif';">
+            <div class="row mb-5">
+                <div class="col-12 col-md-12 text-center text-md-start">
+                    <center>
+                        <h1 style="color: #203038;"><span style="color: #232a61;"></span><u>Reportes financieros
+                                dinámicos</u>
+                        </h1>
+                    </center>
+                </div>
+            </div>
+
+            <!-- tab view start -->
+            <div>
+
+                <!-- Tab panes -->
+                <div class="tab-content py-5">
+                    <div class="tab-pane active" id="Features">
+                        <div class="text-center pb-3 pt-4">
+                            <h2 style="font-weight: 600; font-size: 2.5rem;">Guia de uso</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <ul class="nav o_tab_nav"
+                                    style="text-transform: capitalize; font-size: 18px; border-radius: 6px 6px;background-color: transparent">
+
+                                    <!--General Use-->
+                                    <li class="nav-item w-100 mb-3">
+                                        <a class="nav-link d-flex align-items-center px-3 py-2 list-group-item-beta-dark list-group-item-action active"
+                                            data-bs-toggle="pill" href="#feature_pill_installation"
+                                            style="border-radius:30px; border: 1px solid #203038;opacity:1;letter-spacing: inherit;text-transform: capitalize;transition: 0.3s ease-in-out;"><i
+                                                style="font-size: 20px;"></i>Instalación</a>
+                                    </li>
+
+                                    <!--Form View-->
+                                    <li class="nav-item w-100 mb-3">
+                                        <a class="nav-link d-flex align-items-center px-3 py-2 list-group-item-beta-dark list-group-item-action"
+                                            data-bs-toggle="pill" href="#feature_types_report"
+                                            style="border-radius:30px; border: 1px solid #203038;opacity:1;letter-spacing: inherit;text-transform: capitalize;transition: 0.3s ease-in-out;"><i
+                                                style="font-size: 20px;"></i>Tipo de reportes</a>
+                                    </li>
+
+                                    <!--List View-->
+                                    <li class="nav-item w-100 mb-3">
+                                        <a class="nav-link d-flex align-items-center px-3 py-2 list-group-item-beta-dark list-group-item-action"
+                                            data-bs-toggle="pill" href="#feature_pnl"
+                                            style="border-radius:30px; border: 1px solid #203038;opacity:1;letter-spacing: inherit;text-transform: capitalize;transition: 0.3s ease-in-out;"><i
+                                                style="font-size: 20px;"></i>Estado de resultados</a>
+                                    </li>
+
+                                    <!--Kanban View-->
+                                    <li class="nav-item w-100 mb-3">
+                                        <a class="nav-link d-flex align-items-center px-3 py-2 list-group-item-beta-dark list-group-item-action"
+                                            data-bs-toggle="pill" href="#feature_balsheet"
+                                            style="border-radius:30px; border: 1px solid #203038;opacity:1;letter-spacing: inherit;text-transform: capitalize;transition: 0.3s ease-in-out;"><i
+                                                style="font-size: 20px;"></i>Balance general</a>
+                                    </li>
+
+
+                                    <!--Pivot View-->
+                                    <li class="nav-item w-100 mb-3">
+                                        <a class="nav-link d-flex align-items-center px-3 py-2 list-group-item-beta-dark list-group-item-action"
+                                            data-bs-toggle="pill" href="#feature_executive"
+                                            style="border-radius:30px; border: 1px solid #203038;opacity:1;letter-spacing: inherit;text-transform: capitalize;transition: 0.3s ease-in-out;"><i
+                                                style="font-size: 20px;"></i>Resumen ejecutivo</a>
+                                    </li>
+
+                                    <!--Calendar View
+                                <li class="nav-item w-100 mb-3">
+                                    <a class="nav-link d-flex align-items-center px-3 py-2 list-group-item-beta-dark list-group-item-action"
+                                       data-bs-toggle="pill" href="#feature_cashflow"
+                                       style="border-radius:30px; border: 1px solid #203038;opacity:1;letter-spacing: inherit;text-transform: capitalize;transition: 0.3s ease-in-out;"><i
+                                            style="font-size: 20px;"></i>Cash Flow Statement
+                                        Report</a>
+                                </li>-->
+
+                                    <!--Search View-->
+                                    <li class="nav-item w-100 mb-3">
+                                        <a class="nav-link d-flex align-items-center px-3 py-2 list-group-item-beta-dark list-group-item-action"
+                                            data-bs-toggle="pill" href="#feature_general_ledger"
+                                            style="border-radius:30px; border: 1px solid #203038;opacity:1;letter-spacing: inherit;text-transform: capitalize;transition: 0.3s ease-in-out;"><i
+                                                style="font-size: 20px;"></i>Libro mayor</a>
+                                    </li>
+                                    <li class="nav-item w-100 mb-3">
+                                        <a class="nav-link d-flex align-items-center px-3 py-2 list-group-item-beta-dark list-group-item-action"
+                                            data-bs-toggle="pill" href="#feature_partner_ledger"
+                                            style="border-radius:30px; border: 1px solid #203038;opacity:1;letter-spacing: inherit;text-transform: capitalize;transition: 0.3s ease-in-out;"><i
+                                                style="font-size: 20px;"></i>Libro de clientes / proveedores</a>
+                                    </li>
+                                    <li class="nav-item w-100 mb-3">
+                                        <a class="nav-link d-flex align-items-center px-3 py-2 list-group-item-beta-dark list-group-item-action"
+                                            data-bs-toggle="pill" href="#feature_recievable"
+                                            style="border-radius:30px; border: 1px solid #203038;opacity:1;letter-spacing: inherit;text-transform: capitalize;transition: 0.3s ease-in-out;"><i
+                                                style="font-size: 20px;"></i>Cuentas por cobrar</a>
+                                    </li>
+                                    <li class="nav-item w-100 mb-3">
+                                        <a class="nav-link d-flex align-items-center px-3 py-2 list-group-item-beta-dark list-group-item-action"
+                                            data-bs-toggle="pill" href="#feature_payable"
+                                            style="border-radius:30px; border: 1px solid #203038;opacity:1;letter-spacing: inherit;text-transform: capitalize;transition: 0.3s ease-in-out;"><i
+                                                style="font-size: 20px;"></i>Cuentas por pagar</a>
+                                    </li>
+                                    <li class="nav-item w-100 mb-3">
+                                        <a class="nav-link d-flex align-items-center px-3 py-2 list-group-item-beta-dark list-group-item-action"
+                                            data-bs-toggle="pill" href="#feature_consolidate"
+                                            style="border-radius:30px; border: 1px solid #203038;opacity:1;letter-spacing: inherit;text-transform: capitalize;transition: 0.3s ease-in-out;"><i
+                                                style="font-size: 20px;"></i>Consolidado por diario</a>
+                                    </li>
+                                    <li class="nav-item w-100 mb-3">
+                                        <a class="nav-link d-flex align-items-center px-3 py-2 list-group-item-beta-dark list-group-item-action"
+                                            data-bs-toggle="pill" href="#feature_trial"
+                                            style="border-radius:30px; border: 1px solid #203038;opacity:1;letter-spacing: inherit;text-transform: capitalize;transition: 0.3s ease-in-out;"><i
+                                                style="font-size: 20px;"></i>Balanza de comprobación
+                                        </a>
+                                    </li>
+                                    <li class="nav-item w-100 mb-3">
+                                        <a class="nav-link d-flex align-items-center px-3 py-2 list-group-item-beta-dark list-group-item-action"
+                                            data-bs-toggle="pill" href="#feature_tax"
+                                            style="border-radius:30px; border: 1px solid #203038;opacity:1;letter-spacing: inherit;text-transform: capitalize;transition: 0.3s ease-in-out;"><i
+                                                style="font-size: 20px;"></i>Reporte de impuestos</a>
+                                    </li>
+                                    <li class="nav-item w-100 mb-3">
+                                        <a class="nav-link d-flex align-items-center px-3 py-2 list-group-item-beta-dark list-group-item-action"
+                                            data-bs-toggle="pill" href="#feature_functionality"
+                                            style="border-radius:30px; border: 1px solid #203038;opacity:1;letter-spacing: inherit;text-transform: capitalize;transition: 0.3s ease-in-out;"><i
+                                                style="font-size: 20px;"></i>Functionalities</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="col-12 col-md-8 pt-4 pt-md-0">
+                                <div class="tab-content h-100">
+                                    <div class="tab-pane active" id="feature_types_report">
+                                        <div>
+                                            <h4><u>Varios Tipos de Informes / Filtros Disponibles</u></h4>
+                                            <div class="pb-4" style="font-weight:400; font-size: 18px;">
+                                                Puedes encontrar las opciones para los informes en el menú "Informes"
+                                                presente en la parte superior central de la barra de navegación
+                                                <!--                                            aquí iría una imagen-->
+                                            </div>
+                                            <ul>
+                                                <li>Informe de Pérdidas y Ganancias</li>
+                                                <li>Informe de Balance General</li>
+                                                <li>Informe Resumido Ejecutivo</li>
+                                                <li>Informe de Flujo de Efectivo</li>
+                                                <li>Informe de Libro Mayor General</li>
+                                                <li>Informe Consolidado de Diario</li>
+                                                <li>Informe de Cuentas por Cobrar</li>
+                                                <li>Informe de Cuentas por Pagar</li>
+                                                <li>Informe de Balance de Comprobación</li>
+                                                <li>Informe de Impuestos</li>
+                                            </ul>
+                                            <div class="pb-1">
+                                                <img alt="" class="img-fluid" src="images/report_type.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4><u>Filtros Disponibles</u></h4>
+                                            <div class="pb-4" style="font-weight:400; font-size: 18px;"></div>
+                                            <ul>
+                                                <li><b>Filtro de Fecha</b>: Es posible filtrar el informe basándose en
+                                                    varias opciones de filtro de fecha - <b>Hoy, Fin del Mes Pasado, Fin
+                                                        del Último Trimestre,
+                                                        Fin del Último Año Fiscal, y Rango de Fechas Personalizado.</b>
+                                                </li>
+                                                <li><b>Filtro de Comparación</b>: El informe también puede compararse
+                                                    con
+                                                    el período anterior o un período personalizado (definido por el
+                                                    usuario)
+                                                </li>
+                                                <li><b>Filtro de Diario</b>: El botón de Todos los Diarios ofrece la
+                                                    opción
+                                                    de filtrar el informe en base a <b>Banco, Efectivo, Impuestos en
+                                                        Base de Efectivo, Facturas de Clientes,
+                                                        Diferencias de Cambio, Operaciones Misceláneas, Facturas de
+                                                        Proveedores.</b>
+                                                </li>
+                                                <li><b>Filtro Analítico</b>: La contabilidad analítica te ayuda a
+                                                    analizar
+                                                    costos e ingresos, sin importar el caso de uso. Puedes vender o
+                                                    comprar
+                                                    servicios, rastrear tiempo o analizar el desempeño de producción a
+                                                    través de filtros analíticos.
+                                                </li>
+                                                <li><b>Filtro de Socio</b>: Se puede ingresar el nombre del socio en el
+                                                    botón <b>Búsqueda de Socios</b>
+                                                    y se mostrará el informe correspondiente.
+                                                </li>
+                                                <li><b>Filtro de Tipo de Cuenta</b>: El botón Cuenta permite al usuario
+                                                    seleccionar entre <b>Por Pagar</b> y <b>Por Cobrar</b>
+                                                </li>
+                                                <li><b>Filtro de Opciones</b>: El botón Opciones proporciona opciones
+                                                    para ver
+                                                    <b>Asientos Contables Registrados, Asientos No Registrados
+                                                        (Borrador), Mostrar Asientos Conciliados, Mostrar Asientos No
+                                                        Conciliados, Cambiar el Rango de Fechas</b> y <b>Imprimir
+                                                        Informe con Detalles.</b>
+                                                </li>
+                                                <div class="pb-1">
+                                                    <img alt="" class="img-fluid" src="images/types_of_filter.png">
+                                                </div>
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <div class="pb-1">
+                                                    <img alt="" class="img-fluid" src="images/type_of_filter2.png">
+                                                </div>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane active" id="feature_pnl">
+                                        <div>
+                                            <h4><u>Informe de Pérdidas y Ganancias</u></h4>
+                                            <div class="pb-4" style="font-weight:400; font-size: 18px;">
+                                                El Informe de Pérdidas y Ganancias muestra el Beneficio Bruto, los
+                                                Ingresos Totales y los Informes de Beneficio Neto de la empresa.
+                                            </div>
+                                            <ul>
+                                                <li>Es posible filtrar el informe desde el botón "A partir de la fecha"
+                                                    con varias opciones de filtro de fecha: Hoy, Fin del Mes Pasado, Fin
+                                                    del Último Trimestre, Fin del Último Año Fiscal y Rango de Fechas
+                                                    Personalizado.
+                                                </li>
+                                                <li>El informe también puede compararse con el período anterior o un
+                                                    período personalizado (definido por el usuario).
+                                                </li>
+                                                <li>El botón "Todos los Diarios" ofrece la opción de filtrar el informe
+                                                    en base a Banco, Efectivo, Impuestos en Base de Efectivo, Facturas
+                                                    de Clientes, Diferencias de Cambio, Operaciones Misceláneas,
+                                                    Facturas de Proveedores.
+                                                </li>
+                                                <li>El botón "Opciones" proporciona opciones para ver Asientos
+                                                    Registrados, Asientos No Registrados (Borrador) y Cambiar el Rango
+                                                    de Fechas.
+                                                </li>
+                                            </ul>
+                                            <div class="pb-1">
+                                                <img alt="" class="img-fluid" src="images/profite_and_loss.png">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane active" id="feature_balsheet">
+                                        <div>
+                                            <h4><u>Informe de Balance General</u></h4>
+                                            <div class="pb-4" style="font-weight:400; font-size: 18px;">
+                                                El informe de Balance General muestra los activos, pasivos y capital de
+                                                la empresa.
+
+                                                El Informe de Pérdidas y Ganancias muestra el Beneficio Bruto, los
+                                                Ingresos Totales y los Informes de Beneficio Neto de la empresa.
+                                            </div>
+                                            <ul>
+                                                <li>Es posible filtrar el informe desde el botón "A partir de la fecha"
+                                                    con varias opciones de filtro de fecha: Hoy, Fin del Mes Pasado, Fin
+                                                    del Último Trimestre, Fin del Último Año Fiscal y Rango de Fechas
+                                                    Personalizado.
+                                                </li>
+                                                <li>El informe también puede compararse con el período anterior o un
+                                                    período personalizado (definido por el usuario).
+                                                </li>
+                                                <li>
+                                                    El botón "Todos los Diarios" ofrece la opción de filtrar el informe
+                                                    en base a Banco, Efectivo, Impuestos en Base de Efectivo, Facturas
+                                                    de Clientes, Diferencias de Cambio, Operaciones Misceláneas,
+                                                    Facturas de Proveedores.
+                                                </li>
+                                                <li>El botón "Opciones" proporciona opciones para ver Asientos
+                                                    Registrados, Asientos No Registrados (Borrador) y Cambiar el Rango
+                                                    de Fechas.
+                                                </li>
+                                            </ul>
+                                            <div class="pb-1">
+                                                <img alt="" class="img-fluid" src="images/balance_sheet.png">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane active" id="feature_executive">
+                                        <div>
+                                            <h4><u>Informe Resumido Ejecutivo</u></h4>
+                                            <div class="pb-4" style="font-weight:400; font-size: 18px;">
+                                                El Informe Resumido Ejecutivo muestra un resumen de los puntos
+                                                principales de un informe más extenso.
+                                                Proporciona una visión general de la rentabilidad, posición y desempeño
+                                                del negocio.
+                                            </div>
+                                            <ul>
+                                                <li>Es posible filtrar el informe desde el botón "A partir de la fecha"
+                                                    con varias opciones de filtro de fecha: Hoy, Fin del Mes Pasado, Fin
+                                                    del Último Trimestre, Fin del Último Año Fiscal y Rango de Fechas
+                                                    Personalizado.
+                                                </li>
+                                                <li>El informe también puede compararse con el período anterior o un
+                                                    período personalizado (definido por el usuario).
+                                                </li>
+                                                <li>El botón "Opciones" proporciona opciones para ver Asientos
+                                                    Registrados, Asientos No Registrados (Borrador) y Cambiar el Rango
+                                                    de Fechas.
+                                                </li>
+                                            </ul>
+                                            <div class="pb-1">
+                                                <img alt="" class="img-fluid" src="images/executive_summery.png">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--
+                                <div class="tab-pane active" id="feature_cashflow">
+                                    <div>
+                                        <h4><u>Cash Flow Statement Report</u></h4>
+                                        <div class="pb-4" style="font-weight:400; font-size: 18px;">The Cash Flow
+                                            statement is a financial statement that summarizes the amount of cash and
+                                            cash equivalents entering and leaving a company.
+                                        </div>
+                                        <ul>
+                                            <li>It is possible to filter the report from the As Of Date button based on
+                                                various date filter options- Today, End Of Last Month, End Of Last
+                                                Quarter, End Of Last Financial Year, and Custom date range.
+                                            </li>
+                                            <li>The Journals All button provides the option to filter the report based
+                                                on Bank, Cash, Cash Basis Taxes, Customer Invoices, Exchange Difference,
+                                                Miscellaneous Operations, Vendor Bills.
+                                            </li>
+                                            <li>The Options button provides options to view Posted Entries, Unposted
+                                                Entries(Draft), and To Change Date Range.
+                                            </li>
+                                        </ul>
+                                        <div class="pb-1">
+                                            <img alt="" class="img-fluid"
+                                                 src="images/cash_flow_statement.png">
+                                        </div>
+                                    </div>
+                                </div> -->
+                                    <div class="tab-pane active" id="feature_general_ledger">
+                                        <div>
+                                            <h4><u>Informe del Libro Mayor</u></h4>
+                                            <div class="pb-4" style="font-weight:400; font-size: 18px;">
+                                                El informe del Libro Mayor te muestra toda la actividad financiera de tu
+                                                negocio. Estas cuentas son categorías que muestran hacia dónde va o de
+                                                dónde proviene tu dinero.
+                                            </div>
+                                            <ul>
+                                                <li>Es posible filtrar el informe desde el botón "A partir de la fecha"
+                                                    con varias opciones de filtro de fecha: Hoy, Fin del Mes Pasado, Fin
+                                                    del Último Trimestre, Fin del Último Año Fiscal y Rango de Fechas
+                                                    Personalizado.
+                                                </li>
+                                                <li>El botón "Todos los Diarios" ofrece la opción de filtrar el informe
+                                                    en base a Banco, Efectivo, Impuestos en Base de Efectivo, Facturas
+                                                    de Clientes, Diferencias de Cambio, Operaciones Misceláneas,
+                                                    Facturas de Proveedores.
+                                                </li>
+                                                <li>El botón "Opciones" proporciona opciones para ver Asientos
+                                                    Registrados, Asientos No Registrados (Borrador), Cambiar el Rango de
+                                                    Fechas y Imprimir el Informe con Detalles.
+                                                </li>
+                                            </ul>
+                                            <div class="pb-1">
+                                                <img alt="" class="img-fluid" src="images/general_ledger.png">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane active" id="feature_partner_ledger">
+                                        <div>
+                                            <h4><u>Informe del Libro Mayor de Socios</u></h4>
+                                            <div class="pb-4" style="font-weight:400; font-size: 18px;">
+                                                El informe del Libro Mayor de Socios muestra la actividad financiera de
+                                                un negocio con sus socios.
+                                            </div>
+                                            <ul>
+                                                <li>Es posible filtrar el informe desde el botón "A partir de la fecha"
+                                                    con varias opciones de filtro de fecha: Hoy, Fin del Mes Pasado, Fin
+                                                    del Último Trimestre, Fin del Último Año Fiscal y Rango de Fechas
+                                                    Personalizado.
+                                                </li>
+                                                <li>Se puede ingresar el nombre del socio en el botón "Búsqueda de
+                                                    Socios" y el informe correspondiente será mostrado.
+                                                </li>
+                                                <li>El botón "Cuentas" permite al usuario seleccionar entre Cuentas por
+                                                    Pagar y Cuentas por Cobrar.
+                                                </li>
+                                                <li>El botón "Opciones" proporciona opciones para ver Asientos
+                                                    Registrados, Asientos No Registrados (Borrador), Mostrar Asientos
+                                                    Conciliados, Mostrar Asientos No Conciliados, Cambiar el Rango de
+                                                    Fechas y Imprimir el Informe con Detalles.
+                                                </li>
+                                            </ul>
+                                            <div class="pb-1">
+                                                <img alt="" class="img-fluid" src="images/partner_ledger.png">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane active" id="feature_recievable">
+                                        <div>
+                                            <h4><u>Informe de Cuentas por Cobrar</u></h4>
+                                            <div class="pb-4" style="font-weight:400; font-size: 18px;">
+                                                El informe de Cuentas por Cobrar categoriza y muestra la cantidad que
+                                                una empresa debe cobrar en función del tiempo que una factura ha estado
+                                                pendiente.
+                                            </div>
+                                            <ul>
+                                                <li>Es posible filtrar el informe desde el botón "A partir de la fecha"
+                                                    con varias opciones de filtro de fecha: Hoy, Fin del Mes Pasado, Fin
+                                                    del Último Trimestre, Fin del Último Año Fiscal y Rango de Fechas
+                                                    Personalizado.
+                                                </li>
+                                                <li>Se puede ingresar el nombre del socio en el botón "Búsqueda de
+                                                    Socios" y el informe correspondiente será mostrado.
+                                                </li>
+                                                <li>El botón "Opciones" proporciona opciones para ver Asientos
+                                                    Registrados, Asientos No Registrados (Borrador), Cambiar el Rango de
+                                                    Fechas y Imprimir el Informe con Detalles.
+                                                </li>
+                                            </ul>
+                                            <div class="pb-1">
+                                                <img alt="" class="img-fluid" src="images/age_receivable.png">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane active" id="feature_payable">
+                                        <div>
+                                            <h4><u>Informe de Cuentas por Pagar</u></h4>
+                                            <div class="pb-4" style="font-weight:400; font-size: 18px;">
+                                                El informe de Cuentas por Pagar muestra el total de la deuda que una
+                                                empresa tiene con sus proveedores, en función del número de días
+                                                transcurridos desde la fecha de la factura.
+                                            </div>
+                                            <ul>
+                                                <li>Es posible filtrar el informe desde el botón "A partir de la fecha"
+                                                    con varias opciones de filtro de fecha: Hoy, Fin del Mes Pasado, Fin
+                                                    del Último Trimestre, Fin del Último Año Fiscal y Rango de Fechas
+                                                    Personalizado.</li>
+                                                <li>Se puede ingresar el nombre del socio en el botón "Búsqueda de
+                                                    Socios" y el informe correspondiente será mostrado.</li>
+                                                <li>El botón "Opciones" proporciona opciones para ver Asientos
+                                                    Registrados, Asientos No Registrados (Borrador), Cambiar el Rango de
+                                                    Fechas y Imprimir el Informe con Detalles.</li>
+                                            </ul>
+                                            <div class="pb-1">
+                                                <img alt="" class="img-fluid"
+                                                    src="images/age_payable_without_details.png">
+                                            </div>
+                                            <br />
+                                            <div class="pb-1">
+                                                <img alt="" class="img-fluid" src="images/age_payable_with_details.png">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane active" id="feature_trial">
+                                        <div>
+                                            <h4><u>Informe de Balance de Comprobación</u></h4>
+                                            <div class="pb-4" style="font-weight:400; font-size: 18px;">
+                                                El informe de Balance de Comprobación muestra los saldos finales de las
+                                                cuentas del libro mayor. Los saldos de todos los libros se compilan en
+                                                columnas de débito y crédito que son iguales.
+                                            </div>
+                                            <ul>
+                                                <li>Es posible filtrar el informe desde el botón "A partir de la fecha"
+                                                    con varias opciones de filtro de fecha: Hoy, Fin del Mes Pasado, Fin
+                                                    del Último Trimestre, Fin del Último Año Fiscal y Rango de Fechas
+                                                    Personalizado.</li>
+                                                <li>El botón "Todos los Diarios" ofrece la opción de filtrar el informe
+                                                    en base a Banco, Efectivo, Impuestos en Base de Efectivo, Facturas
+                                                    de Clientes, Diferencias de Cambio, Operaciones Misceláneas,
+                                                    Facturas de Proveedores.</li>
+                                                <li>El botón "Opciones" proporciona opciones para ver Asientos
+                                                    Registrados, Asientos No Registrados (Borrador), Cambiar el Rango de
+                                                    Fechas y Imprimir el Informe con Detalles.</li>
+                                            </ul>
+                                            <div class="pb-1">
+                                                <img alt="" class="img-fluid" src="images/trial_balance.png">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane active" id="feature_consolidate">
+                                        <div>
+                                            <h4><u>Informe Consolidado</u></h4>
+                                            <div class="pb-4" style="font-weight:400; font-size: 18px;">
+                                                El informe de Diario Consolidado muestra los montos de crédito y débito
+                                                de todas las líneas del diario subsidiario de una empresa que fueron
+                                                consolidadas en cuentas.
+                                            </div>
+                                            <ul>
+                                                <li>Es posible filtrar el informe desde el botón "A partir de la fecha"
+                                                    con varias opciones de filtro de fecha: Hoy, Fin del Mes Pasado, Fin
+                                                    del Último Trimestre, Fin del Último Año Fiscal y Rango de Fechas
+                                                    Personalizado.</li>
+                                                <li>El botón "Todos los Diarios" ofrece la opción de filtrar el informe
+                                                    en base a Banco, Efectivo, Impuestos en Base de Efectivo, Facturas
+                                                    de Clientes, Diferencias de Cambio, Operaciones Misceláneas,
+                                                    Facturas de Proveedores.</li>
+                                                <li>El botón "Opciones" proporciona opciones para ver Asientos
+                                                    Registrados, Asientos No Registrados (Borrador), Cambiar el Rango de
+                                                    Fechas y Imprimir el Informe con Detalles.</li>
+                                            </ul>
+                                            <div class="pb-1">
+                                                <img alt="" class="img-fluid" src="images/consolidate_journal.png">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane active" id="feature_tax">
+                                        <div>
+                                            <h4><u>Informe de Impuestos</u></h4>
+                                            <div class="pb-4" style="font-weight:400; font-size: 18px;">
+                                                El informe de Impuestos muestra los impuestos incurridos en varias
+                                                ventas y compras del negocio, categorizándolos en función de varios
+                                                tramos/brackets fiscales. El informe ofrece una excelente visión general
+                                                rápida.
+                                            </div>
+                                            <ul>
+                                                <li>Es posible filtrar el informe en base a varias opciones de filtro de
+                                                    fecha: Hoy, Fin del Mes Pasado, Fin del Último Trimestre, Fin del
+                                                    Último Año Fiscal y Rango de Fechas Personalizado.</li>
+                                                <li>El informe también se puede comparar con el período anterior o un
+                                                    período personalizado (definido por el usuario).</li>
+                                            </ul>
+                                            <div class="pb-1">
+                                                <img alt="" class="img-fluid" src="images/tax_report.png">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane active" id="feature_functionality">
+                                        <div>
+                                            <h4><u>Funcionalidades</u></h4>
+                                            <div class="pb-4" style="font-weight:400; font-size: 18px;">
+                                                Los informes calculados pueden ser exportados, impresos y enviados por
+                                                correo electrónico según la preferencia del usuario. En la esquina
+                                                superior izquierda, hay botones para Imprimir (PDF), Exportar (XLSX) y
+                                                Enviar Correo Electrónico.
+                                            </div>
+                                            <ul>
+                                                <li><b>Imprimir (PDF)</b>: Para imprimir el informe actual en formato
+                                                    PDF.</li>
+                                                <li><b>Exportar (XLSX)</b>: Para imprimir el informe actual en formato
+                                                    Excel.</li>
+                                                <li><b>Enviar Correo Electrónico</b>: Para enviar por correo electrónico
+                                                    el informe actual adjunto como PDF al usuario.</li>
+                                            </ul>
+                                            <br />
+
+                                            <h4><u>Crear Informes Financieros Dinámicamente</u></h4>
+                                            <div class="pb-4" style="font-weight:400; font-size: 18px;">
+                                                Con la ayuda de esta funcionalidad, puedes crear informes por ti mismo.
+                                                Para hacerlo, sigue estos pasos:
+                                            </div>
+                                            <ul>
+                                                <li>Ve al menú de configuración presente en la barra de navegación. Haz
+                                                    clic en "Informes Financieros Dinámicos". Al hacer clic, se abrirá
+                                                    un formulario.</li>
+                                                <li>Rellena los campos requeridos:</li>
+                                                <ul>
+                                                    <li><b>Nombre del Informe</b>: Proporciona un nombre para el
+                                                        informe.</li>
+                                                    <li><b>Menú del Informe</b>: Elige el menú del informe donde deseas
+                                                        que aparezca. Por ejemplo, si eliges
+                                                        <b>Contabilidad->Informes->Estados Genéricos</b>, el nombre del
+                                                        informe se mostrará en la sección de Informes de la barra de
+                                                        navegación.</li>
+                                                    <li><b>Padre</b>: Si deseas mantener el informe en el menú de
+                                                        informes existentes, puedes elegir el tipo correspondiente. Hay
+                                                        5 tipos para crear informes:</li>
+                                                    <ul>
+                                                        <li><b>Total</b>: Si eliges <i>Total</i> como tipo, el informe
+                                                            se mostrará o se creará como la suma de los registros.</li>
+                                                        <li><b>Resta</b>: Si eliges <i>Resta</i> como tipo, se creará un
+                                                            informe que mostrará la diferencia de los registros.</li>
+                                                        <li><b>Cuentas</b>: Si eliges <i>Cuentas</i> como tipo, el
+                                                            informe se creará según las cuentas seleccionadas.</li>
+                                                        <li><b>Tipo de Cuenta</b>: Si eliges <i>Tipo de Cuenta</i> como
+                                                            tipo, el informe se creará según el tipo de cuentas
+                                                            seleccionado.</li>
+                                                        <li><b>Valor del Informe</b>: Si eliges <i>Valor del Informe</i>
+                                                            como tipo, el informe se basará en valores como ingresos
+                                                            operativos, activos, etc.</li>
+                                                    </ul>
+                                                </ul>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- tab view / end -->
+            </div>
+
+
+    </main>
+
+    <!-- Bootstrap 5 JS cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

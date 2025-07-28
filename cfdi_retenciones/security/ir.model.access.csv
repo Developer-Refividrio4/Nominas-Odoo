@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_factura_retencion,access_factura_retencion,model_cfdi_retencion,base.group_user,1,1,1,1
+access_cfdi_retencion_line,access_cfdi_retencion_line,model_cfdi_retencion_line,base.group_user,1,1,1,1
+

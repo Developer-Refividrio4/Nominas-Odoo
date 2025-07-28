@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ClientDetailsEdit" t-inherit="point_of_sale.PartnerDetailsEdit" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('partner-details-box')]" position="inside">
+            <div class="partner-detail col">
+                <span class="label">Regimen fiscal</span>
+                <select class="detail form-select" id="regimen_fiscal" name="regimen_fiscal_id" t-model="changes.regimen_fiscal_id">
+                    <option value="">None</option>
+                    <t t-foreach="pos.regimen_fiscal" t-as="rec" t-key="rec.id">
+                        <option t-att-value="rec.id">
+                            <t t-esc="rec.description"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+    </t>
+</templates>

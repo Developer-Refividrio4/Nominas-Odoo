@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <record id="form_tablas_diot_view" model="ir.ui.view">
+        <field name="name">tablas.diot.form</field>
+        <field name="model">diot.cfdi</field>
+        <field name="arch" type="xml">
+        <form string="DIOT">
+             <header>
+                 <button name="action_compute" string="Calcular" type="object" invisible="state != 'draft'" class="btn-primary"/>
+                 <button name="action_export" string="Exportar TXT" type="object" invisible="state != 'draft'" class="btn-primary"/>
+                 <button name="action_export_xls" string="Exportar XLS" type="object" invisible="state != 'draft'" class="btn-primary"/>
+                 <button name="action_validate" string="Cerrar" type="object" invisible="state != 'draft'" class="btn-primary"/>
+                 <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+             </header>
+             <sheet>             
+             <group>
+                <field name="name"/>
+                <field name="month"/>
+                <field name="year"/>
+             </group>
+             <notebook position="inside">
+                <page name="tablas_tercero" string="Datos del tercero declarado">
+                   <group>
+                        <field name="tabla_tercero" colspan="2" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="valor05"/>
+                                <field name="valor01" optional="show"/>
+                                <field name="valor02" optional="show"/>
+                                <field name="valor03" optional="show"/>
+                                <field name="valor04" optional="show"/>
+                                <field name="valor06" optional="show"/>
+                                <field name="valor07" optional="show"/>
+                            </tree>
+                            <form>
+                                <group col="4">
+                                <field name="valor01"/>
+                                <field name="valor02"/>
+                                <field name="valor03"/>
+                                <field name="valor04"/>
+                                <field name="valor05"/>
+                                <field name="valor06"/>
+                                <field name="valor07"/>
+                                </group>
+                            </form>
+                        </field>
+                   </group>
+                </page>
+                <page name="tabla_actos_actividades" string="Valor de actos o actividades">
+                   <group>
+                        <field name="tabla_tercero" colspan="2" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="valor05"/>
+                                <field name="valor08" optional="show"/>
+                                <field name="valor09" optional="show"/>
+                                <field name="valor10" optional="show"/>
+                                <field name="valor11" optional="show"/>
+                                <field name="valor12" optional="show"/>
+                                <field name="valor13" optional="show"/>
+                                <field name="valor14" optional="show"/>
+                                <field name="valor15" optional="show"/>
+                                <field name="valor16" optional="show"/>
+                                <field name="valor17" optional="show"/>
+                            </tree>
+                            <form>
+                                <group col="4">
+                                <field name="valor05"/>
+                                <field name="valor08"/>
+                                <field name="valor09"/>
+                                <field name="valor10"/>
+                                <field name="valor11"/>
+                                <field name="valor12"/>
+                                <field name="valor13"/>
+                                <field name="valor14"/>
+                                <field name="valor15"/>
+                                <field name="valor16"/>
+                                <field name="valor17"/>
+                                </group>
+                            </form>
+                        </field>
+                   </group>
+                </page>
+                <page name="tabla_iva_acreditable" string="IVA Acreditable">
+                   <group>
+                        <field name="tabla_tercero" colspan="2" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="valor05"/>
+                                <field name="valor18" optional="show"/>
+                                <field name="valor19" optional="show"/>
+                                <field name="valor20" optional="show"/>
+                                <field name="valor21" optional="show"/>
+                                <field name="valor22" optional="show"/>
+                                <field name="valor23" optional="show"/>
+                                <field name="valor24" optional="show"/>
+                                <field name="valor25" optional="show"/>
+                                <field name="valor26" optional="show"/>
+                                <field name="valor27" optional="show"/>
+                            </tree>
+                            <form>
+                                <group col="4">
+                                <field name="valor05"/>
+                                <field name="valor18"/>
+                                <field name="valor19"/>
+                                <field name="valor20"/>
+                                <field name="valor21"/>
+                                <field name="valor22"/>
+                                <field name="valor23"/>
+                                <field name="valor24"/>
+                                <field name="valor25"/>
+                                <field name="valor26"/>
+                                <field name="valor27"/>
+                                </group>
+                            </form>
+                        </field>
+                   </group>
+                </page>
+                <page name="tabla_iva_no_acreditable" string="IVA No Acreditable">
+                   <group>
+                        <field name="tabla_tercero" colspan="2" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="valor05"/>
+                                <field name="valor28" optional="show"/>
+                                <field name="valor29" optional="show"/>
+                                <field name="valor30" optional="show"/>
+                                <field name="valor31" optional="show"/>
+                                <field name="valor32" optional="show"/>
+                                <field name="valor33" optional="show"/>
+                                <field name="valor34" optional="show"/>
+                                <field name="valor35" optional="show"/>
+                                <field name="valor36" optional="show"/>
+                                <field name="valor37" optional="show"/>
+                                <field name="valor38" optional="show"/>
+                                <field name="valor39" optional="show"/>
+                                <field name="valor40" optional="show"/>
+                                <field name="valor41" optional="show"/>
+                                <field name="valor42" optional="show"/>
+                                <field name="valor43" optional="show"/>
+                                <field name="valor44" optional="show"/>
+                                <field name="valor45" optional="show"/>
+                                <field name="valor46" optional="show"/>
+                                <field name="valor47" optional="show"/>
+                            </tree>
+                            <form>
+                                <group col="4">
+                                <group col="4">
+                                <field name="valor05"/>
+                                </group>
+                                <group col="4">
+                                <field name="valor28"/>
+                                <field name="valor29"/>
+                                <field name="valor30"/>
+                                <field name="valor31"/>
+                                </group>
+                                <group col="4">
+                                <field name="valor32"/>
+                                <field name="valor33"/>
+                                <field name="valor34"/>
+                                <field name="valor35"/>
+                                </group>
+                                <group col="4">
+                                <field name="valor36"/>
+                                <field name="valor37"/>
+                                <field name="valor38"/>
+                                <field name="valor39"/>
+                                </group>
+                                <group col="4">
+                                <field name="valor40"/>
+                                <field name="valor41"/>
+                                <field name="valor42"/>
+                                <field name="valor43"/>
+                                </group>
+                                <group col="4">
+                                <field name="valor44"/>
+                                <field name="valor45"/>
+                                <field name="valor46"/>
+                                <field name="valor47"/>
+                                </group>
+                                </group>
+                            </form>
+                        </field>
+                   </group>
+                </page>
+                <page name="tabla_adicionales" string="Datos adicionales">
+                   <group>
+                        <field name="tabla_tercero" colspan="2" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="valor05"/>
+                                <field name="valor48" optional="show"/>
+                                <field name="valor49" optional="show"/>
+                                <field name="valor50" optional="show"/>
+                                <field name="valor51" optional="show"/>
+                                <field name="valor52" optional="show"/>
+                                <field name="valor53" optional="show"/>
+                                <field name="valor54" optional="show"/>
+                            </tree>
+                            <form>
+                                <group col="4">
+                                <field name="valor05"/>
+                                <field name="valor48"/>
+                                <field name="valor49"/>
+                                <field name="valor50"/>
+                                <field name="valor51"/>
+                                <field name="valor52"/>
+                                <field name="valor53"/>
+                                <field name="valor54"/>
+                                </group>
+                            </form>
+                        </field>
+                   </group>
+                </page>
+            </notebook>
+          </sheet>
+         </form> 
+       </field>
+    </record>
+
+    <record id="tree_tablas_diot_view" model="ir.ui.view">
+        <field name="name">tablas.diot.tree</field>
+        <field name="model">diot.cfdi</field>
+        <field name="arch" type="xml">
+            <tree string="DIOT">
+                <field name="month"/>
+                <field name="year"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="search_tablas_diot_view" model="ir.ui.view">
+        <field name="name">tablas.diot.search.view</field>
+        <field name="model">diot.cfdi</field>
+        <field name="arch" type="xml">
+            <search string="Tablas Nomina SAT">
+                <field name="month"/>
+                <field name="year"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tree_tablas_diot" model="ir.actions.act_window">
+        <field name="name">DIOT</field>
+        <field name="res_model">diot.cfdi</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="tree_tablas_diot_view" />
+        <field name="search_view_id" ref="search_tablas_diot_view" />
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem
+          name="DIOT 2025"
+          parent="menu_contabilidad_electonica"
+          id="menu_action_tree_tablas_diot"
+          action="action_tree_tablas_diot"
+          sequence="20"
+      />
+
+</odoo>

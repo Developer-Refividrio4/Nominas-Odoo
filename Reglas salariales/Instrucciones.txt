@@ -1,0 +1,7 @@
+Para la carga de los archivos seguir este orden:
+1. Tablas cfdi (tablas.cfdi.csv)
+2. Categorias salariales (hr.salary.rule.category.csv)
+3. Reglas salariales (primero hr.salary.rule.csv y lueg hr.salary.rule_1.csv)
+4. Estrcuturas salariales (hr.payroll.structure.csv)
+
+En caso de que marque error al importar las reglas salariales puede ser por el idioma, favor de contactarnos para revisar.

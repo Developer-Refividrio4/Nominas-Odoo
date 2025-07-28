@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--CFDI EXTERNAL LAYOUT-->
+	<template id="cfdi_retencion_external_layout">
+			<!-- Multicompany -->
+			<t t-if="not o and doc">
+				<t t-set="o" t-value="doc" />
+			</t>
+			<t t-if="o and 'company_id' in o">
+				<t t-set="company" t-value="o.company_id"></t>
+			</t>
+			<t t-if="not o or not 'company_id' in o">
+				<t t-set="company" t-value="res_company"></t>
+			</t>
+            <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style" >
+			<div class="row">
+				<div class="col-9 text-left" style="margin-top:20px;"
+					t-field="company.report_header" />
+			</div>
+			<div class="row zero_min_height">
+				<div class="col-12">
+					<div style="border-bottom: 1px solid black;"></div>
+				</div>
+			</div>
+			<t t-if="o.estado_factura == 'factura_cancelada'">
+			   <h1 style="text-align:center;">FACTURA CANCELADA</h1>
+			</t>
+        </div>
+
+        <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout"
+             t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+
+		<!-- EMPIEZA EL FOOTER -->
+        <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+            <div class="text-center" style="border-top: 1px solid black;font-size:12px;">
+                <div name="financial_infos">
+                    <span t-field="company.report_footer"/>
+                </div>
+
+                <div class="text-muted">
+                    Hoja: <span class="page"/> / <span class="topage"/>
+                </div>
+            </div>
+        </div>
+		<!--TERMINA EL FOOTER-->
+    </template>
+
+	<!--TERMINA CFDI EXTERNAL LAYOUT-->
+
+		<template id="report_facturaretencion_document" >
+			<t t-call="cfdi_retenciones.cfdi_retencion_external_layout">
+				<t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+
+				<div class="page" style="padding-top: 10px; border-top: 1px solid black; font-size:12px;">
+					<div class="row">
+
+					<!--INICIA LOGO DE LA EMPRESA-->
+						<div class="col-4">
+                           <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="height: 130px;width: 130px;padding-left:10px;" />
+						</div>
+					<!--TERMINA LOGO DE LA EMPRESA-->
+
+						<!--EMPIEZA DATOS DEL EMISOR-->
+						<div class="col-4" >
+							<div>
+								<strong>Emisor</strong>
+							</div>
+							<div>
+								<t t-if="o.factura_cfdi">
+									<span t-field="o.company_id.nombre_fiscal" /><br/>
+						            <span t-field="o.company_id.partner_id.street"/> <span t-field="o.company_id.partner_id.street2"/> <br/>
+						            <span t-field="o.company_id.partner_id.city"/>, <span t-field="o.company_id.partner_id.state_id.name"/> <span t-field="o.company_id.partner_id.zip"/> <br/>
+						            <span t-field="o.company_id.partner_id.country_id.name"/><br/>
+
+								</t>
+								<t t-if="not o.factura_cfdi">
+									<span t-field="o.company_id.partner_id.name" />
+						            <span t-field="o.company_id.partner_id.street"/> <span t-field="o.company_id.partner_id.street2"/><br/>
+						            <span t-field="o.company_id.partner_id.city"/>, <span t-field="o.company_id.partner_id.state_id.name"/> <span t-field="o.company_id.partner_id.zip"/> <br/>
+						            <span t-field="o.company_id.partner_id.country_id.name"/><br/>
+
+								</t>
+
+							</div>
+								<t t-if="o.factura_cfdi">
+								<div>
+								<span t-field="o.company_id.vat" />
+								</div>
+								<div>
+								<strong>Regimen fiscal</strong>: <span t-field="o.company_id.regimen_fiscal_id.description" />
+								</div>
+								</t>
+						</div>
+						<!--TERMINA DATOS DEL EMISOR-->
+
+						<!--INFORMACIÓN GENERAL FACTURA-->
+						<div class="col-4">
+							<div>
+								<t t-if="o.factura_cfdi">
+									<strong>Folio:</strong>
+								</t>
+								<t t-if="not o.factura_cfdi">
+									<strong>Nota de venta:</strong>
+								</t>
+								<span t-field="o.number_folio" />
+							</div>
+							<div>
+								<strong>Fecha: </strong>
+								<span t-field="o.invoice_date" />
+							</div>
+							<div>
+								<strong>Lugar de expedición: </strong>
+								<span t-field="o.company_id.partner_id.zip"/>
+							</div>
+						</div>
+						<!--TERMINA INFORMACIÓN GENERAL DE FACTURA-->
+					</div>
+
+					<div class="row mt32 mb32" style="padding-top: 10px;">
+						<div class="col-10" >
+							<strong>Receptor</strong><br/>
+									<span t-field="o.partner_id.name" /><br/>
+								    <span t-field="o.partner_id.street"/> <span t-field="o.partner_id.street2"/><br/>
+								    <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/> <span t-field="o.partner_id.zip"/><br/>
+								    <span t-field="o.partner_id.country_id.name"/><br/>
+						    <t t-if="o.factura_cfdi">
+						    	 <div>
+								    <span t-field="o.partner_id.vat" />
+								</div>
+						    </t>
+						</div>
+
+					</div>
+
+                    <!-- tabla de totales -->
+					<table class="table" font-size="11px;">
+						<thead>
+							<tr>
+								<th>Monto total de operación</th>
+								<th class="text-right">Monto total gravado</th>
+								<th class="text-right">Monto total exento</th>
+								<th class="text-right">Monto total retenido</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="text-right">
+									<span t-field="o.amount_operation"/>
+								</td>
+								<td class="text-right">
+									<span t-field="o.amount_gravado"/>
+								</td>
+								<td class="text-right"> 
+									<span t-field="o.amount_exento"/>
+								</td>
+								<td class="text-right">
+									<span t-field="o.amount_retenido"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<table class="table" font-size="11px;">
+						<thead>
+							<tr>
+								<th>Impuesto</th>
+								<th class="text-right">Tipo de pago</th>
+								<th class="text-right">Monto operacion</th>
+								<th width="text-right">Monto gravado</th>
+								<th class="text-right">Monto exento</th>
+								<th class="text-right">Monto retenido</th>
+							</tr>
+						</thead>
+						<tbody class="invoice_tbody">
+							<tr t-foreach="o.retencion_line_ids" t-as="l" style="page-break-inside: avoid">
+								<td>
+									<span t-field="l.impuesto" />
+								</td>
+								<td class="text-right">
+									<span t-field="l.tipo_pago" />
+								</td>
+								<td class="text-right">
+									<span t-field="l.monto_base" />
+								</td>
+								<td class="text-right">
+									<span t-field="l.monto_gravado" />
+								</td>
+								<td class="text-right">
+									<span t-field="l.monto_exento" />
+								</td>
+								<td class="text-right">
+									<span t-field="l.monto_retenido" />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<table class="table" font-size="11px;">
+						<thead>
+							<tr>
+								<th>Periodo mes inicial</th>
+								<th class="text-right">Periodo mes final</th>
+								<th class="text-right">Periodo ejercicio anual</th>
+								<th class="text-right">Tipo de retención</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="text-right">
+									<span t-field="o.periodo_inicio"/>
+								</td>
+								<td class="text-right">
+									<span t-field="o.periodo_final"/>
+								</td>
+								<td class="text-right"> 
+									<span t-field="o.ejercicio"/>
+								</td>
+								<td class="text-right">
+									<span t-field="o.retencion"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+                <!--- AGREGAR COMPLEMENTOS -->
+                <!--iNICIA COMPLEMENTO DIVIDENDOS-->
+				<t t-if="o.complemento_c">
+					<div>
+					        <strong>Complemento dividendos</strong>
+					    </div>
+					<div class="row" style="border:solid 2px black;font-size:12px;">
+						<table class="borderless" cellspacing="0"  style="width:100%;border:none;border-collapse:separate;border-spacing: 2px;">
+							<tr>
+								<td>
+									<strong>Tipo dividendo</strong>
+								</td>
+								<td >
+									<span t-field="o.tipo_diviendo" />
+								</td>
+								<td>
+									<strong>Monto ISR acreditado Nacional</strong>
+								</td>
+								<td >
+									<span t-field="o.montisracredmx" />
+								</td>
+								<td>
+									<strong>Monto ISR acreditado Extranjero</strong>
+								</td>
+								<td >
+									<span t-field="o.montisracredex" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Monto ISR retenido extranjero</strong>
+								</td>
+								<td >
+									<span t-field="o.montretex" />
+								</td>
+								<td>
+									<strong>Tipo de sociedad</strong>
+								</td>
+								<td >
+									<span t-field="o.tiposocdistr" />
+								</td>
+								<td>
+									<strong>Monto ISR acreditable nacional</strong>
+								</td>
+								<td >
+									<span t-field="o.montisracrednal" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Monto dividendo acumulable nacional</strong>
+								</td>
+								<td >
+									<span t-field="o.montdivacumnal" />
+								</td>
+							   <td>
+									<strong>Monto dividendo acumulable extranjero</strong>
+								</td>
+								<td >
+									<span t-field="o.montdivacumnex" />
+								</td>
+								<td>
+									<strong>Remanente</strong>
+								</td>
+								<td >
+									<span t-field="o.div_remanente" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</t> <!--TERMINA COMPLEMENTO DIVIDENDOS-->
+
+				<t t-if="o.complemento_g">
+					<div>
+					        <strong>Complemento pagos a extranjeros</strong>
+					    </div>
+					<div class="row" style="border:solid 2px black;font-size:12px;">
+						<table class="borderless" cellspacing="0"  style="width:100%;border:none;border-collapse:separate;border-spacing: 2px;">
+							<tr>
+								<td>
+									<strong>Es beneficiario efectivo del cobro</strong>
+								</td>
+								<td >
+									<span t-field="o.benefefectdelcobro" />
+								</td>
+								<td>
+									<strong>Concepto de pago</strong>
+								</td>
+								<td >
+									<span t-field="o.concepto_pago" />
+								</td>
+								<td>
+									<strong>Descripcion del concepto</strong>
+								</td>
+								<td >
+									<span t-field="o.descripcion_concepto" />
+								</td>
+							</tr>
+                            <t t-if="o.benefefectdelcobro == 'NO'">
+							<tr>
+								<td>
+									<strong>Pais de residencia del extranjero</strong>
+								</td>
+								<td>
+									<span t-field="o.pais_residencia" />
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+                            </t>
+                            <t t-if="o.benefefectdelcobro == 'SI'">
+							<tr>
+								<td>
+									<strong>RFC del representante legal</strong>
+								</td>
+								<td >
+									<span t-field="o.rfc_beneficiario" />
+								</td>
+							   <td>
+									<strong>CURP del representante legal</strong>
+								</td>
+								<td >
+									<span t-field="o.curp_beneficiario" />
+								</td>
+								<td>
+									<strong>Razon Social del beneficiario</strong>
+								</td>
+								<td >
+									<span t-field="o.razon_social_beneficiario" />
+								</td>
+							</tr>
+                            </t>
+						</table>
+					</div>
+				</t> <!--TERMINA COMPLEMENTO DIVIDENDOS-->
+
+                <!--TERMINA COMPLEMENTOS-->
+                <br/>
+
+				<!--TABLA DE INFORMACIÓN CENTRAL-->
+				<t t-if="o.tipo_relacion">
+					<div class="row">
+					    <div>
+					        <strong>CFDI Relacionado </strong>
+					    </div>
+						<div>
+					        Tipo de Relación: <span t-field="o.tipo_relacion" />
+					    </div>
+					    <div>
+					        CFDI Relacionado: <span t-field="o.uuid_relacionado" />
+					    </div>
+					</div>
+				</t>
+				<!--INICIA TABLA-->
+				<t t-if="o.factura_cfdi" style="font-size:12px;">
+					<div class="row" style="border:solid 2px black;font-size:12px;">
+						<table class="borderless" cellspacing="0"  style="width:100%;border:none;border-collapse:separate;border-spacing: 2px;">
+							<tr>
+								<td>
+									<strong>Fecha y hora de certificación</strong>
+								</td>
+								<td >
+									<span t-field="o.fecha_certificacion" />
+								</td>
+								<td>
+									<strong>Número de certificado</strong>
+								</td>
+								<td >
+									<span t-field="o.numero_cetificado" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Certificado SAT</strong>
+								</td>
+								<td >
+									<span t-field="o.cetificaso_sat" />
+								</td>
+								<td>
+									<strong>Folio fiscal</strong>
+								</td>
+								<td >
+									<span t-field="o.folio_fiscal" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</t>
+
+				<!--INICIAN ELEMENTOS DEL SAT-->
+                   <div name="cadenas" class="row" style="page-break-inside: avoid">
+                         <!--INICIA CODIGO QR-->
+                         <div class="barcode col-3">
+                            <img t-if="o.qrcode_image" t-att-src="image_data_uri(o.qrcode_image)" style="height: 180px;width: 180px;" />
+                         </div>
+                          <!--TERMINA CODIGO QR-->
+                         <div class="col-9" style="font-size:10px;">
+                            <div>
+                                <strong>Cadena Original del Complemento digital del SAT</strong>
+                                <span t-field="o.cadena_origenal" style="word-break:break-word;font-size:8px;" />
+                            </div>
+                            <div>
+                                <strong>Sello Digital del CFDI</strong>
+                                <span t-field="o.selo_digital_cdfi" style="word-break:break-word;font-size:8px;" />
+                            </div>
+                            <div>
+                                <strong>Sello del SAT</strong>
+                                <span t-field="o.selo_sat" style="word-break:break-word;font-size:8px;" />
+                            </div>
+                         </div>
+                    </div>
+				<!--TERMINAN ELEMENTOS DEL SAT-->
+
+
+					<!--DOCUMENTO LEGAL-->
+					<p>
+						<center>
+							<strong>ESTE DOCUMENTO ES UNA REPRESENTACIÓN IMPRESA DE UN CFDI</strong>
+						</center>
+					</p>
+<!--
+					<t t-if="o.comment">
+					<div class="row">
+					<strong>Observaciones: </strong><span t-field="o.comment" />
+					</div>
+					</t>-->
+				</div>
+			</t>
+		</template>
+
+		<template id="report_facturaretencion1">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="cfdi_retenciones.report_facturaretencion_document" t-lang="o.partner_id.lang" />
+				</t>
+			</t>
+		</template>
+
+        <record id="report_facturaretencion" model="ir.actions.report">
+            <field name="name">Factura Retencion</field>
+            <field name="model">cfdi.retencion</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">cfdi_retenciones.report_facturaretencion1</field>
+            <field name="report_file">cfdi_retenciones.report_facturaretencion1</field>
+            <field name="paperformat_id" ref="cdfi_invoice.paperformat_a4_landscape"/>
+            <field name="binding_model_id" ref="model_cfdi_retencion"/>
+            <field name="binding_type">report</field>
+            <field name="print_report_name">(object.number)</field>
+        </record>
+
+</odoo>

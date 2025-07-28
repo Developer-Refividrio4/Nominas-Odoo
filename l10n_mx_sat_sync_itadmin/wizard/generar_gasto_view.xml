@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_generar_gasto_form" model="ir.ui.view">
+        <field name="name">Generar.Gasto.form</field>
+        <field name="model">generar.gasto.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generar Gasto">
+                <group>
+                    <field name="company_id" invisible="1"/>
+                    <field name="product_id"/>
+                    <field name="employee_id"/>
+                    <field name="payment_mode"/>
+                </group>
+                <footer>
+                    <button string="Generar" type="object" name="create_expense_entry" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_generar_gasto_wizard" model="ir.actions.act_window">
+        <field name="name">Generar Gasto</field>
+        <field name="res_model">generar.gasto.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_generar_gasto_form"/>
+    </record>
+
+    <record id="action_generar_gasto" model="ir.actions.server">
+    	<field name="name">Generar Gasto</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="base.model_ir_attachment"/>
+        <field name="binding_model_id" ref="base.model_ir_attachment"/>
+        <field name="code">
+            action = env['ir.actions.act_window']._for_xml_id('l10n_mx_sat_sync_itadmin.action_generar_gasto_wizard')
+        </field>
+    </record>
+</odoo>

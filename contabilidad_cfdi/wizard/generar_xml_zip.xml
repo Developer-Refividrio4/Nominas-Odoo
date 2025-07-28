@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="reporte_conta_xml_zip_download_wizard_download_form_view_itadmin" model="ir.ui.view">
+        <field name="name">Reporte DIOT Download</field>
+        <field name="model">conta.xml.zip.download</field>
+        <field name="arch" type="xml">
+            <form string="Reporte DIOT" >
+                <group>
+                    <field name='xml_data' invisible='1'/>
+                    <field name='zip_data' invisible='1'/>
+                </group>
+                <footer>
+                    <button name="download_xml_zip_file" string="XML" type="object" class="oe_highlight" context="{'file_type': 'xml'}" />
+                    <button name="download_xml_zip_file" string="ZIP" type="object" class="oe_highlight" context="{'file_type': 'zip'}" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

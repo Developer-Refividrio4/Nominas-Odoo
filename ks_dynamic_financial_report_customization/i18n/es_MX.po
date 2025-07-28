@@ -1,0 +1,234 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ks_dynamic_financial_report_customization
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0-20240826\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-10 14:35+0000\n"
+"PO-Revision-Date: 2024-12-10 09:39-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_MX\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_tb_xlsx.py:0
+#, python-format
+msgid " To "
+msgstr ""
+
+#. module: ks_dynamic_financial_report_customization
+#: model_terms:ir.ui.view,arch_db:ks_dynamic_financial_report_customization.general_ledger_hierarchy_pdf_table
+#: model_terms:ir.ui.view,arch_db:ks_dynamic_financial_report_customization.general_ledger_hierarchy_pdf_with_initial_balance
+msgid "<span>Initial Balance</span>"
+msgstr "<span>Saldo inicial</span>"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-javascript
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_tb_xlsx.py:0
+#: code:addons/ks_dynamic_financial_report_customization/static/src/xml/ks_dynamic_financial_report.xml:0
+#, python-format
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: ks_dynamic_financial_report_customization
+#: model:ir.actions.act_window,name:ks_dynamic_financial_report_customization.account_group_action
+#: model:ir.ui.menu,name:ks_dynamic_financial_report_customization.menu_account_group_action
+msgid "Account Groups"
+msgstr "Grupos de cuentas"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#, python-format
+msgid "Accounts"
+msgstr "Cuentas"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_tb_xlsx.py:0
+#, python-format
+msgid "Analytic Accounts"
+msgstr "Cuentas analíticas"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_tb_xlsx.py:0
+#, python-format
+msgid "As of Date"
+msgstr "Desde"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-javascript
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_tb_xlsx.py:0
+#: code:addons/ks_dynamic_financial_report_customization/static/src/xml/ks_dynamic_financial_report.xml:0
+#, python-format
+msgid "Balance"
+msgstr "Balance"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#, python-format
+msgid "Code"
+msgstr "Código"
+
+#. module: ks_dynamic_financial_report_customization
+#: model_terms:ir.actions.act_window,help:ks_dynamic_financial_report_customization.account_group_action
+msgid "Create a new account group"
+msgstr "Crear un grupo de cuetna"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-javascript
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_tb_xlsx.py:0
+#: code:addons/ks_dynamic_financial_report_customization/static/src/xml/ks_dynamic_financial_report.xml:0
+#, python-format
+msgid "Credit"
+msgstr "Credito"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#, python-format
+msgid "Date"
+msgstr "Fecha"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_tb_xlsx.py:0
+#, python-format
+msgid "Date From"
+msgstr "Fecha inical"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_tb_xlsx.py:0
+#, python-format
+msgid "Date To"
+msgstr "Fecha final"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-javascript
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_tb_xlsx.py:0
+#: code:addons/ks_dynamic_financial_report_customization/static/src/xml/ks_dynamic_financial_report.xml:0
+#, python-format
+msgid "Debit"
+msgstr "Débito"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-javascript
+#: code:addons/ks_dynamic_financial_report_customization/static/src/xml/ks_dynamic_financial_report.xml:0
+#, python-format
+msgid "Ending Balance"
+msgstr "Saldo final"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#, python-format
+msgid "Entry Label"
+msgstr "Etiqueta"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-javascript
+#: code:addons/ks_dynamic_financial_report_customization/static/src/xml/ks_dynamic_financial_report.xml:0
+#, python-format
+msgid "General Ledger"
+msgstr "Libro mayor"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-javascript
+#: code:addons/ks_dynamic_financial_report_customization/static/src/xml/ks_dynamic_financial_report.xml:0
+#, python-format
+msgid "Hierarchy"
+msgstr "Jerarquía"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-javascript
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#: code:addons/ks_dynamic_financial_report_customization/static/src/xml/ks_dynamic_financial_report.xml:0
+#, python-format
+msgid "Initial Balance"
+msgstr "Saldo inicial"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#, python-format
+msgid "JRNL"
+msgstr "Diario"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-javascript
+#: code:addons/ks_dynamic_financial_report_customization/static/src/xml/ks_dynamic_financial_report.xml:0
+#, python-format
+msgid "Journal Items"
+msgstr "Apuntes contables"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_tb_xlsx.py:0
+#, python-format
+msgid "Journals"
+msgstr "Diarios"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#, python-format
+msgid "Move"
+msgstr "Movimiento"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#, python-format
+msgid "Partner"
+msgstr "Contacto"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-python
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_gl_xlsx.py:0
+#: code:addons/ks_dynamic_financial_report_customization/reports/dynamic_financial_tb_xlsx.py:0
+#, python-format
+msgid "Tags"
+msgstr "Etiqueta"
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-javascript
+#: code:addons/ks_dynamic_financial_report_customization/static/src/xml/ks_dynamic_financial_report.xml:0
+#, python-format
+msgid "Unfolded"
+msgstr "Desplegado"
+
+#. module: ks_dynamic_financial_report_customization
+#: model:ir.model,name:ks_dynamic_financial_report_customization.model_ks_dynamic_financial_base
+msgid "ks_dynamic_financial_base"
+msgstr ""
+
+#. module: ks_dynamic_financial_report_customization
+#. odoo-javascript
+#: code:addons/ks_dynamic_financial_report_customization/static/src/xml/ks_dynamic_financial_report.xml:0
+#, python-format
+msgid "to"
+msgstr "a"

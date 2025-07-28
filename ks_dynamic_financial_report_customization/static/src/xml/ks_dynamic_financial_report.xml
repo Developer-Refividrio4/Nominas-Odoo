@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+
+    <t t-name="ks_dynamic_financial_report_customization.trial_balance_hierarchy_table">
+        <t t-set="row_level" t-value="row_level+1"/>
+        <t t-foreach="account_data" t-as="account" t-key="account_index">
+            <tr t-attf-data-level="{{row_level}}" t-att-data-rows="account.tr_count"
+                t-on-click="event => this.onClickRowTrialBalance(event)"
+                t-attf-class="{{ row_level!=1 ? 'd-none is_closed' : 'is_closed' }}"
+            >
+                <t t-if="account['children']">
+                    <td class="bld ks_color_td_1">
+                        <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"></i>
+                        <t t-esc="account.code"/>
+                                        -
+                        <t t-esc="account.name"/>
+                    </td>
+                </t>
+                <t t-else="">
+                    <td class="bld ks_color_td_1" t-att-data-bs-account-id="account.id">
+                        <div class="dropdown">
+                            <a data-bs-toggle="dropdown" href="#">
+                                <span t-att-data-bs-account-id="account.id">
+                                    <t t-esc="account.code"/>
+                                    -
+                                    <t t-esc="account.name"/>
+                                </span>
+                                <i class="fa fa-angle-down" role="img" aria-label="Unfolded" title="Unfolded"></i>
+                            </a>
+                            <span t-att-data-bs-account-id="account.id"></span>
+                            <ul class="dropdown-menu p-2" role="menu">
+                                <t t-if="account.id">
+                                    <li role="presentation">
+                                        <a role="menuitem" class="ks_view-source" tabindex="-1"
+                                           action="ks_show_df_journal_items"
+                                           t-on-click="event => this.ksgetaction(event)"
+                                           t-att-data-bs-account-id="account.id">
+                                            Journal Items
+                                        </a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="menuitem" class="ks_view-source" tabindex="1"
+                                           action="ks_show_df_general_ledger"
+                                           t-on-click="event => this.ksgetaction(event)"
+                                           t-att-data-bs-account-id="account.id">
+                                            General Ledger
+                                        </a>
+                                    </li>
+                                </t>
+                            </ul>
+                        </div>
+                    </td>
+                </t>
+
+                <td class="ks_amt ks_color_td_1">
+                    <t t-raw="account['initial_debit']"/>
+                </td>
+                <td class="ks_amt ks_color_td_1">
+                    <t t-raw="account['initial_credit']"/>
+                </td>
+                <td class="ks_amt bld ks_color_td_1">
+                    <t t-raw="account['initial_balance']"/>
+                </td>
+                <td class="ks_amt ks_color_td_1">
+                    <t t-raw="account['debit']"/>
+                </td>
+                <td class="ks_amt ks_color_td_1">
+                    <t t-raw="account['credit']"/>
+                </td>
+                <td class="ks_amt bld ks_color_td_1">
+                    <t t-raw="account['balance']"/>
+                </td>
+                <td class="ks_amt ks_color_td_1">
+                    <t t-raw="account['ending_debit']"/>
+                </td>
+                <td class="ks_amt ks_color_td_1">
+                    <t t-raw="account['ending_credit']"/>
+                </td>
+                <td class="ks_amt bld ks_color_td_1">
+                    <t t-raw="account['ending_balance']"/>
+                </td>
+            </tr>
+            <t t-if="account['children']">
+                <t t-set="account_data" t-value="account['children']"/>
+                <t t-call="ks_dynamic_financial_report_customization.trial_balance_hierarchy_table"/>
+            </t>
+        </t>
+    </t>
+
+
+    <t t-name="ks_dynamic_financial_report_customization.general_ledger_hierarchy_table">
+        <t t-set="row_level" t-value="row_level+1"/>
+        <t t-foreach="ks_report_lines" t-as="account_line" t-key="account_line_index">
+            <t t-if="account_line['lines']">
+                <tr style="background:#efefef" t-attf-data-level="{{row_level}}" t-att-data-rows="account_line.tr_count"
+                    t-attf-class="{{ row_level!=1 ? 'ks_py-mline ks_row_first d-none' : 'ks_py-mline ks_row_first' }}"
+                    data-bs-toggle="collapse"
+                    t-att-data-bs-account-id="account_line.id"
+                    t-attf-data-bs-target=".a{{account_line.id}}"
+                    t-on-click="event => this.ksGetMoveLines(event)"
+                >
+                    <td colspan="8">
+                        <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"></i>
+                        <span>
+                            <t t-esc="account_line['code']"/>
+                            -
+                            <t t-esc="account_line['name']"/>
+                        </span>
+                    </td>
+                    <t t-if="ks_enable_ledger_in_bal">
+                        <td colspan="1" class="ks_amt">
+                            <t t-raw="account_line['initial_balance']"/>
+                        </td>
+                    </t>
+                    <td colspan="1" class="ks_amt">
+                        <t t-raw="account_line['debit']"/>
+                    </td>
+                    <td colspan="1" class="ks_amt">
+                        <t t-raw="account_line['credit']"/>
+                    </td>
+                    <td colspan="1" class="ks_amt">
+                        <t t-raw="account_line['balance']"/>
+                    </td>
+                    <td colspan="1" class="ks_amt"></td>
+                    <t t-set="common_id" t-value="'a'+account_line.id"/>
+
+                </tr>
+            </t>
+            <t t-else="">
+                <tr style="background:#efefef" t-attf-data-level="{{row_level}}" t-att-data-rows="account_line.tr_count"
+                t-on-click="event => this.onClickRow(event)" t-attf-class="{{ row_level!=1 ? 'ks_py-mline d-none is_closed' : 'ks_py-mline is_closed' }}">
+                    <td colspan="8">
+                        <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"></i>
+                        <span>
+                            <t t-esc="account_line['code']"/>
+                            -
+                            <t t-esc="account_line['name']"/>
+                        </span>
+                    </td>
+                    <t t-if="ks_enable_ledger_in_bal">
+                        <td colspan="1" class="ks_amt">
+                            <t t-raw="account_line['initial_balance']"/>
+                        </td>
+                    </t>
+                    <td colspan="1" class="ks_amt">
+                        <t t-raw="account_line['debit']"/>
+                    </td>
+                    <td colspan="1" class="ks_amt">
+                        <t t-raw="account_line['credit']"/>
+                    </td>
+                    <td colspan="1" class="ks_amt">
+                        <t t-raw="account_line['balance']"/>
+                    </td>
+                    <td colspan="1" class="ks_amt"></td>
+                    <t t-set="common_id" t-value="'a'+account_line.id"/>
+                </tr>
+            </t>
+
+            <t t-if="account_line['children']">
+                <t t-set="ks_report_lines" t-value="account_line['children']"/>
+                <t t-call="ks_dynamic_financial_report_customization.general_ledger_hierarchy_table"/>
+            </t>
+            <t t-elif="account_line['lines']">
+                <tr t-attf-class="collapse a{{account_line.id}}">
+                    <td class="p-0" colspan="12">
+                        <ul class="ks_py-mline-ul m-0  ">
+                            <t t-if="!account_line.single_page">
+                                <t t-foreach="account_line['pages']" t-as="i" t-key="i">
+                                    <li>
+                                        <a class="ks_py-mline-page"
+                                           t-att-data-bs-page-number="i"
+                                           t-att-data-bs-count="account_line['count']"
+                                           t-att-data-bs-account-id="account_line.id">
+                                            <t t-esc="i"/>
+                                        </a>
+                                    </li>
+                                </t>
+                            </t>
+                        </ul>
+                    </td>
+                </tr>
+            </t>
+        </t>
+    </t>
+
+    <t t-inherit="ks_dynamic_financial_report.ks_tax_report_lines" t-inherit-mode="extension">
+        <xpath expr="//Dropdown" position="after">
+            <t t-if="props.action.xml_id == 'ks_dynamic_financial_report.ks_df_tb_action'">
+                <button t-on-click="openWizard" type="button" class="btn btn-primary">
+                    Generar XML
+                </button>
+            </t>
+        </xpath>
+        <xpath expr="//table[hasclass('ks_table_4')]" position="replace">
+            <t t-if="ks_df_report_opt.show_hierarchy">
+                <t t-set="row_level" t-value="0"/>
+                <table id="trial_balance_table" class=" ks_table_4 table border" cellspacing="0" width="100%">
+                    <thead class="ks_thead">
+                        <tr>
+                            <th colspan="1"></th>
+                            <th colspan="3"> <!--class="ks_in_bal"-->
+                                <span>Initial Balance</span>
+                            </th>
+                            <th colspan="3"> <!--class="ks_to_dates"-->
+                                <span>
+                                    <t t-esc="ks_df_new_start_report_opt"/>
+                                    to
+                                    <t t-esc="ks_df_new_end_report_opt"/>
+                                </span>
+                            </th>
+                            <th colspan="3"> <!--class="ks_Ending_Bal"-->
+                                <span>Ending Balance</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="ks_color_th_1">Account</th>
+                            <th class=" ks_color_th_1">Debit</th>
+                            <th class=" ks_color_th_1">Credit</th>
+                            <th class=" ks_color_th_1">Balance</th>
+                            <th class=" ks_color_th_1">Debit</th>
+                            <th class=" ks_color_th_1">Credit</th>
+                            <th class=" ks_color_th_1">Balance</th>
+                            <th class=" ks_color_th_1">Debit</th>
+                            <th class=" ks_color_th_1">Credit</th>
+                            <th class=" ks_color_th_1">Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody class="border">
+                        <t t-call="ks_dynamic_financial_report_customization.trial_balance_hierarchy_table"/>
+                        <t t-foreach="subtotal" t-as="account" t-key="account">
+                            <tr class="ks_py-mline" data-bs-toggle="collapse"
+                                t-attf-data-bs-id=".a{{subtotal[account].id}}"
+                                t-on-click="event => this.ksGetMoveLines(event)">
+                                <td class="bld">
+                                    <t t-esc="subtotal[account]['name']"/>
+                                </td>
+                                <td> <!--class="ks_amt"-->
+                                    <t t-raw="subtotal[account]['initial_debit']"/>
+                                </td>
+                                <td >
+                                    <t t-raw="subtotal[account]['initial_credit']"/>
+                                </td>
+                                <td class="bld">
+                                    <t t-raw="subtotal[account]['initial_balance']"/>
+                                </td>
+                                <td> <!--class="ks_amt"-->
+                                    <t t-raw="subtotal[account]['debit']"/>
+                                </td>
+                                <td> <!--class="ks_amt"-->
+                                    <t t-raw="subtotal[account]['credit']"/>
+                                </td>
+                                <td class="bld">
+                                    <t t-raw="subtotal[account]['balance']"/>
+                                </td>
+                                <td> <!--class="ks_amt"-->
+                                    <t t-raw="subtotal[account]['ending_debit']"/>
+                                </td>
+                                <td>
+                                    <t t-raw="subtotal[account]['ending_credit']"/>
+                                </td>
+                                <td class="bld">
+                                    <t t-raw="subtotal[account]['ending_balance']"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+            <t t-else="">
+                <table id="data-bs-lines" class=" ks_table_4 table border" cellspacing="0" width="100%">
+                    <thead class="ks_thead">
+                        <tr>
+                            <th colspan="1"></th>
+                            <th colspan="3"> <!--class="ks_in_bal"-->
+                                <span>Initial Balance</span>
+                            </th>
+                            <th colspan="3"> <!--class="ks_to_dates"-->
+                                <span>
+                                    <t t-esc="ks_df_new_start_report_opt"/>
+                                    to
+                                    <t t-esc="ks_df_new_end_report_opt"/>
+                                </span>
+                            </th>
+                            <th colspan="3"> <!--class="ks_Ending_Bal"-->
+                                <span>Ending Balance</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="ks_color_th_1">Account</th>
+                            <th class=" ks_color_th_1">Debit</th>
+                            <th class=" ks_color_th_1">Credit</th>
+                            <th class=" ks_color_th_1">Balance</th>
+                            <th class=" ks_color_th_1">Debit</th>
+                            <th class=" ks_color_th_1">Credit</th>
+                            <th class=" ks_color_th_1">Balance</th>
+                            <th class=" ks_color_th_1">Debit</th>
+                            <th class=" ks_color_th_1">Credit</th>
+                            <th class=" ks_color_th_1">Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody class="border">
+                        <t t-foreach="account_data" t-as="account" t-key="account">
+                            <tr class="" data-bs-toggle="collapse"
+                                t-attf-data-bs-id=".a{{account_data[account].id}}">
+                                <td class="bld ks_color_td_1" t-att-data-bs-account-id="account_data[account]['id']">
+                                    <div class="dropdown">
+                                        <a data-bs-toggle="dropdown" href="#">
+                                            <span t-att-data-bs-account-id="account_data[account]['id']">
+                                                <t t-esc="account_data[account]['code']"/>
+                                                -
+                                                <t t-esc="account_data[account]['name']"/>
+                                            </span>
+                                            <i class="fa fa-angle-down" role="img" aria-label="Unfolded"
+                                               title="Unfolded"></i>
+                                        </a>
+                                        <span t-att-data-bs-account-id="account_data[account]['id']"></span>
+                                        <ul class="dropdown-menu p-2" role="menu">
+                                            <t t-if="account_data[account]['id']">
+                                                <li role="presentation">
+                                                    <a role="menuitem" class="ks_view-source" tabindex="-1"
+                                                       action="ks_show_df_journal_items"
+                                                       t-on-click="event => this.ksgetaction(event)"
+                                                       t-att-data-bs-account-id="account_data[account]['id']">
+                                                        Journal Items
+                                                    </a>
+                                                </li>
+                                                <li role="presentation">
+                                                    <a role="menuitem" class="ks_view-source" tabindex="1"
+                                                       action="ks_show_df_general_ledger"
+                                                       t-on-click="event => this.ksgetaction(event)"
+                                                       t-att-data-bs-account-id="account_data[account]['id']">
+                                                        General Ledger
+                                                    </a>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="ks_amt ks_color_td_1">
+                                    <t t-raw="account_data[account]['initial_debit']"/>
+                                </td>
+                                <td class="ks_amt ks_color_td_1">
+                                    <t t-raw="account_data[account]['initial_credit']"/>
+                                </td>
+                                <td class="ks_amt bld ks_color_td_1">
+                                    <t t-raw="account_data[account]['initial_balance']"/>
+                                </td>
+                                <td class="ks_amt ks_color_td_1">
+                                    <t t-raw="account_data[account]['debit']"/>
+                                </td>
+                                <td class="ks_amt ks_color_td_1">
+                                    <t t-raw="account_data[account]['credit']"/>
+                                </td>
+                                <td class="ks_amt bld ks_color_td_1">
+                                    <t t-raw="account_data[account]['balance']"/>
+                                </td>
+                                <td class="ks_amt ks_color_td_1">
+                                    <t t-raw="account_data[account]['ending_debit']"/>
+                                </td>
+                                <td class="ks_amt ks_color_td_1">
+                                    <t t-raw="account_data[account]['ending_credit']"/>
+                                </td>
+                                <td class="ks_amt bld ks_color_td_1">
+                                    <t t-raw="account_data[account]['ending_balance']"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <t t-foreach="subtotal" t-as="account" t-key="account">
+                            <tr class="ks_py-mline" data-bs-toggle="collapse"
+                                t-attf-data-bs-id=".a{{subtotal[account]['id']}}"
+                                t-on-click="event => this.ksGetMoveLines(event)">
+                                <td class="bld">
+                                    <t t-esc="subtotal[account]['name']"/>
+                                </td>
+                                <td> <!--class="ks_amt"-->
+                                    <t t-raw="subtotal[account]['initial_debit']"/>
+                                </td>
+                                <td>
+                                    <t t-raw="subtotal[account]['initial_credit']"/>
+                                </td>
+                                <td class="bld">
+                                    <t t-raw="subtotal[account]['initial_balance']"/>
+                                </td>
+                                <td> <!--class="ks_amt"-->
+                                    <t t-raw="subtotal[account]['debit']"/>
+                                </td>
+                                <td> <!--class="ks_amt"-->
+                                    <t t-raw="subtotal[account]['credit']"/>
+                                </td>
+                                <td class="bld">
+                                    <t t-raw="subtotal[account]['balance']"/>
+                                </td>
+                                <td> <!--class="ks_amt"-->
+                                    <t t-raw="subtotal[account]['ending_debit']"/>
+                                </td>
+                                <td>
+                                    <t t-raw="subtotal[account]['ending_credit']"/>
+                                </td>
+                                <td class="bld">
+                                    <t t-raw="subtotal[account]['ending_balance']"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </xpath>
+        <xpath expr="//table[hasclass('ks_table_1')]" position="replace">
+            <div class="container-fluid  my-4">
+                <t t-if="ks_df_report_opt.show_hierarchy">
+                    <t t-set="row_level" t-value="0"/>
+                    <table class="table ks_table_1" cellspacing="0" width="100%" id="general_ledger_table">
+                        <thead class="ks_thead">
+                            <tr>
+                                <th colspan="8">Account</th>
+                                <t t-if="ks_enable_ledger_in_bal">
+                                    <th class="">Initial Balance</th>
+                                </t>
+                                <th class="">Debit</th>
+                                <th class="">Credit</th>
+                                <th class="">Balance</th>
+                                <th class=""></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-call="ks_dynamic_financial_report_customization.general_ledger_hierarchy_table"/>
+                        </tbody>
+
+                    </table>
+                </t>
+                <t t-else="">
+                    <table id="data-bs-lines" class="table ks_table_1" cellspacing="0" width="100%">
+                        <thead class="ks_thead">
+                            <tr>
+                                <th colspan="8">Account</th>
+                                <t t-if="ks_enable_ledger_in_bal">
+                                    <th class="">Initial Balance</th>
+                                </t>
+                                <th class="">Debit</th>
+                                <th class="">Credit</th>
+                                <th class="">Balance</th>
+                                <th class=""></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="ks_report_lines" t-as="account" t-key="account">
+                                <t t-set="common_id" t-value=""/>
+                                <tr style="background:#efefef" class="ks_py-mline ks_row_first "
+                                    data-bs-toggle="collapse"
+                                    t-att-data-bs-account-id="ks_report_lines[account]['id']"
+                                    t-attf-data-bs-target=".a{{ks_report_lines[account]['id']}}"
+                                    t-on-click="event => this.ksGetMoveLines(event)">
+                                    <td colspan="8">
+                                        <i class="fa fa-caret-down" role="img" aria-label="Unfolded"
+                                           title="Unfolded"></i>
+                                        <span>
+                                            <t t-esc="ks_report_lines[account]['code']"/>
+                                            -
+                                            <t t-esc="ks_report_lines[account]['name']"/>
+                                        </span>
+                                    </td>
+                                    <t t-if="ks_enable_ledger_in_bal">
+                                        <td colspan="1" class="ks_amt">
+                                            <t t-raw="ks_report_lines[account]['initial_balance']"/>
+                                        </td>
+                                    </t>
+                                    <td colspan="1" class="ks_amt">
+                                        <t t-raw="ks_report_lines[account]['debit']"/>
+                                    </td>
+                                    <td colspan="1" class="ks_amt">
+                                        <t t-raw="ks_report_lines[account]['credit']"/>
+                                    </td>
+                                    <td colspan="1" class="ks_amt">
+                                        <t t-raw="ks_report_lines[account]['balance']"/>
+                                    </td>
+                                    <td colspan="1" class="ks_amt"></td>
+                                    <t t-set="common_id" t-value="'a'+ks_report_lines[account]['id']"/>
+                                </tr>
+                                <tr t-attf-class="collapse a{{ks_report_lines[account]['id']}}">
+                                    <td class="p-0" colspan="12">
+                                        <ul class="ks_py-mline-ul m-0  ">
+                                            <t t-if="!ks_report_lines[account]['single_page']">
+                        <t t-set="total_pages" t-value="ks_report_lines[account]['pages'].length"/>
+                                            <span class="o_pager_value ks_new_text" t-esc="1"/>
+                                            <span>/</span>
+                                            <span>
+                                                <t t-esc="total_pages"/>
+                                            </span>
+                                            <span offset="0" t-att-total_pages="total_pages">
+                                                <button type="button"
+                                                        class="fa fa-chevron-left btn ks_load_previous_new ks_py-mline-page"
+                                                        t-att-data-bs-account-id="ks_report_lines[account]['id']"
+                                                        title="Previous" t-on-click="(event) => this.ksGetMoveLines(event)"/>
+                                                <button type="button"
+                                                        class="fa fa-chevron-right btn ks_load_next_new ks_py-mline-page"
+                                                        t-att-data-bs-account-id="ks_report_lines[account]['id']"
+                                                        title="Next" t-on-click="(event) => this.ksGetMoveLines(event)"/>
+                                            </span>
+                                            </t>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </div>
+        </xpath>
+    </t>
+
+    <t t-inherit="ks_dynamic_financial_report.ks_report_filters" t-inherit-mode="extension">
+        <xpath expr="//div[@class='gap-1 d-flex']" position="inside">
+            <Dropdown togglerClass="'btn btn-secondary'">
+                <t t-set-slot="toggler">CE</t>
+                <DropdownItem onSelected="(event) => this.OnNewFunction('ks_catalog_cuentas', event)"
+                              class="{'selected': this.selectedOption1 === 'ks_catalog_cuentas'}">
+                    Catalogo de cuentas
+                </DropdownItem>
+                <DropdownItem onSelected="(event) => this.OnNewFunction('ks_balanza_comprobacion', event)"
+                              class="{'selected': this.selectedOption1 === 'ks_balanza_comprobacion'}">
+                    Balanza de comprobación
+                </DropdownItem>
+                <hr/>
+                <DropdownItem onSelected="(event) => this.OnNewFunction('ks_normal', event)"
+                              class="{'selected': this.selectedOption2 === 'ks_normal'}">
+                    Normal
+                </DropdownItem>
+                <DropdownItem onSelected="(event) => this.OnNewFunction('ks_complenmentaria', event)"
+                              class="{'selected': this.selectedOption2 === 'ks_complenmentaria'}">
+                    Complementaria
+                </DropdownItem>
+                <hr/>
+                <DropdownItem onSelected="(event) => this.OnNewFunction('ks_mes_13', event)"
+                              class="{'selected': this.selectedOption3 === 'ks_mes_13'}">
+                    Mes 13
+                </DropdownItem>
+                <hr/>
+                <div class="dropdown-item date" > <!--t-att-class="(ks_df_informations['date']['ks_process'] == 'custom') ? 'selected' : ''"-->
+                    <label class="d-flex align-items-center">
+                        Fecha de modificación:
+                    </label>
+                    <DateTimeInput value="typeof selectedOption4 === 'string' ? null : selectedOption4" type="'date'"
+                                  onChange="(date) => this.OnNewDate(date)"  />
+                                  <!--class="{'selected': this.selectedOption4 === 'ks_fecha_modificacion'}">-->
+                </div>
+            </Dropdown>
+        </xpath>
+    </t>
+
+
+    <t t-inherit="ks_dynamic_financial_report.ks_searchview_extra_ks_df_informations" t-inherit-mode="extension">
+        <xpath expr="//Dropdown" position="inside">
+            <DropdownItem class="{'selected': ks_df_informations.show_hierarchy}"
+                          onSelected="() => this.OnClickDate('show_hierarchy')"
+                          t-if="!['Balance Sheet', 'Age Receivable', 'Age Payable', 'Consolidate Journal', 'Profit and Loss', 'Cash Flow Statement', 'Partner Ledger', 'Executive Summary', 'Tax Report'].includes(new_ks_df_reports_ids)">
+                Hierarchy
+            </DropdownItem>
+            <DropdownItem class="{'selected': ks_df_informations.show_ce}"
+                          onSelected="() => this.OnClickDate('show_ce')"
+                          t-if="!['Balance Sheet', 'Age Receivable', 'Age Payable', 'Consolidate Journal', 'Profit and Loss', 'Cash Flow Statement', 'Partner Ledger', 'Executive Summary', 'Tax Report'].includes(new_ks_df_reports_ids)">
+                Contabilidad electronica
+            </DropdownItem>
+        </xpath>
+    </t>
+
+</templates>

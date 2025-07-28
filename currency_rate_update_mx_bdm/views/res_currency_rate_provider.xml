@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+
+    <record model="ir.ui.view" id="res_currency_rate_mx_form_view">
+        <field name="name">res.currency.rate.provider.form</field>
+        <field name="model">res.currency.rate.provider</field>
+        <field name="inherit_id" ref="currency_rate_update.res_currency_rate_provider_form_view"/>
+        <field name="arch" type="xml">
+           <field name="currency_ids" position="after">
+              <field name="tipo" />
+           </field>
+        </field>
+    </record>
+
+</odoo>

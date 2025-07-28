@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_invice_report_document">
+        <tr>
+            <td>
+                <span t-field="doc.invoice_date" />
+            </td>
+            <td>
+                <span t-field="doc.partner_id.name" />
+            </td>
+            <td>
+                <span t-field="doc.partner_id.vat" />
+            </td> 
+            <td>
+                <t t-if="doc.factura_cfdi">Si</t>
+                <t t-if="not doc.factura_cfdi">No</t>
+            </td> 
+            <td>
+                <span t-field="doc.estado_factura" />
+            </td> 
+            <td>
+                <span t-field="doc.user_id.name" />
+            </td> 
+            <td>
+                <span t-field="doc.invoice_origin" />
+            </td> 
+            <td>
+                <span t-field="doc.number_folio" />
+            </td> 
+            <td>
+                <span t-field="doc.methodo_pago" />
+            </td> 
+            <td>
+                <span t-field="doc.amount_total" />
+            </td>
+        </tr>
+    </template>
+
+    <template id="report_invoice_report">
+        <t t-call="web.html_container">
+        	<t t-foreach="docs" t-as="o">
+            <t t-call="web.external_layout"> 
+                <div class="page">
+                    <div class="oe_structure"/> 
+                    <div class="row" style="padding-top:30px;">
+                    	<h1>Total de facturas</h1>
+                    </div>
+                    <div class="row" style="padding-top:50px;">
+                    	<Strong>Periodo:</Strong>
+                        <div style="width: 50%;">
+                            <strong t-esc="o.date_from"/>  Al <strong t-esc="o.date_to"/>  
+                        </div>
+                    </div>
+                    <br/><br/>
+                    <div class="row">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <strong>Fecha</strong>
+                                    </th>
+                                    <th>
+                                        <strong>Nombre</strong>
+                                    </th>
+                                    <th>
+                                        <strong>RFC</strong>
+                                    </th>
+                                    <th>
+                                        <strong>Factura CFDI</strong>
+                                    </th>
+                                    <th>
+                                        <strong>Estado Factura</strong>
+                                    </th>
+                                    <th>
+                                        <strong>Vendedor</strong>
+                                    </th>
+                                    <th>
+                                        <strong>Documento Origen</strong>
+                                    </th>
+                                    <th>
+                                        <strong>Folio</strong>
+                                    </th>
+                                    <th>
+                                        <strong>Método de Pago</strong>
+                                    </th>
+                                    <th>
+                                        <strong>Total</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="get_lines(o)" t-as="doc">
+                                    <t  t-call="reporte_facturas.report_invice_report_document" />
+                                </t>
+                            </tbody>
+                        </table><!--
+                        <div class="row">
+						<div class="col-xs-4 pull-right">
+							<table class="table table-condensed">
+								<tr class="border-black">
+									<td>
+										<strong>Subtotal</strong>
+									</td>
+									<td class="text-right">
+										<span t-esc="get_sub_total()"
+											/>
+									</td>
+								</tr>
+								<t t-foreach="get_taxes()" t-as="line">
+										<tr>
+											<td>
+												<span t-esc="line['name']" />
+											</td>
+											<td class="text-right">
+												<span t-esc="line['amount']" />
+											</td>
+										</tr>
+								</t>
+								<tr class="border-black">
+									<td>
+										<strong>Total</strong>
+									</td>
+									<td class="text-right">
+										<span t-esc="get_total()"
+											/>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>-->
+                    </div>
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

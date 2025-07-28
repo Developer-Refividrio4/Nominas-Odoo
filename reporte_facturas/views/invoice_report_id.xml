@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="report_invoice_total" model="ir.actions.report">
+            <field name="name">Reporte de Facturas</field>
+            <field name="model">xls.invoice.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">reporte_facturas.report_invoice_report</field>
+        </record>
+
+        <record id="report_invoice_xls" model="ir.actions.report">
+            <field name="name">Invoice Excel Report</field>
+            <field name="model">xls.invoice.report</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">reporte_facturas.invoice_xlsx</field>
+            <field name="attachment_use">True</field>
+        </record>
+
+    </data>
+</odoo>

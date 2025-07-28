@@ -1,0 +1,847 @@
+id,category_id/id,category_code,condition_select,condition_python,cuenta_especie/id,code,amount_python_compute,note,fondo_ahorro_aux,forma_pago,amount_fix,account_tax_id/id,integrar_al_ingreso,integrar_ptu,integrar_estatal,condition_range,variable_imss_monto,name,tipo_cotro_pago/id,parte_exenta/id,parte_gravada/id,exencion,variable_imss,amount_percentage,amount_percentage_base,sequence,variable_imss_tipo,tipo_cdeduccion/id,amount_select,tipo_cpercepcion/id
+payroll_itadmin_rule.hora_extra_dob_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if worked_days.HEX2:
+   result = 1
+else:
+   result = 0",,PE003,"monto_exento = 0
+horas_exentas = 0
+monto_total = 0
+
+if contract.periodicidad_pago == '02':
+   tope_uma = 5
+if contract.periodicidad_pago == '04':
+   tope_uma = 10
+
+monto_total = worked_days.HEX2.number_of_hours *  contract.sueldo_diario/8 * 2
+
+#revisar si el trabajador gana mas de un salario mínimo
+if contract.sueldo_diario >= contract.tablas_cfdi_id.salario_minimo:
+   monto_exento =  monto_total * 0.5
+else:
+   monto_exento =  monto_total
+
+# revisar que lo exento no supere 5 SM por semana (quincenal 10, semanal 5)
+if monto_exento > (tope_uma *contract.tablas_cfdi_id.uma):
+   monto_exento =  tope_uma * contract.tablas_cfdi_id.uma
+
+result = round(monto_exento,2)
+",,False,Efectivo,0,,,False,False,contract.wage,0,Horas extras doble exento,,,,False,False,0,,110,Todo el monto,,Python Code,
+payroll_itadmin_rule.hora_extra_dob_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if worked_days.HEX2:
+   result = 1
+else:
+   result = 0",,PG003,"monto_exento = 0
+horas_exentas = 0
+monto_total = 0
+
+if contract.periodicidad_pago == '02':
+   tope_uma = 5
+if contract.periodicidad_pago == '04':
+   tope_uma = 10
+
+monto_total = worked_days.HEX2.number_of_hours *  contract.sueldo_diario/8 * 2
+
+#revisar si el trabajador gana mas de un salario mínimo
+if contract.sueldo_diario > contract.tablas_cfdi_id.salario_minimo:
+   monto_exento =  monto_total * 0.5
+else:
+   monto_exento =  monto_total
+
+# revisar que lo exento no supere 5 SM por semana (quincenal 10, semanal 5)
+if monto_exento > (tope_uma *contract.tablas_cfdi_id.uma):
+   monto_exento =  tope_uma * contract.tablas_cfdi_id.uma
+
+result = round(monto_total - monto_exento, 2)",,False,Efectivo,0,,,False,False,contract.wage,0,Horas extras doble gravado,,,,False,False,0,,111,Todo el monto,,Python Code,
+payroll_itadmin_rule.aguinaldo_liq_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if worked_days.AGUI:
+   result = 1
+else:
+   result = 0",,PE004,"aguinaldo = 0
+antiguedad_anos = contract.antiguedad_anos
+dias_aguinaldo = 0
+dias_proporcionales = 0
+
+if contract.antiguedad_anos < 1:
+   antiguedad_anos = 1
+else:
+   antiguedad_anos = contract.antiguedad_anos
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','<=',antiguedad_anos)],order='antiguedad desc',limit=1)
+    if line:
+       dias_aguinaldo = line.aguinaldo
+
+if worked_days.AGUI:
+   total = contract.sueldo_diario * worked_days.AGUI.number_of_days
+else:
+   total = 0
+
+monto_exento =  contract.tablas_cfdi_id.uma * 30
+
+if total > monto_exento:
+   result = round(monto_exento, 2)
+else:
+   result = round(total, 2)",,False,Efectivo,0,,,False,False,contract.wage,0,Aguinaldo liquidacion exenta,,,,False,False,0,,115,Todo el monto,,Python Code,
+payroll_itadmin_rule.aguinaldo_ex,payroll_itadmin_category.ALW2,ALW2,Always True,"
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days
+                    # inputs: object containing the computed inputs
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = rules.NET > categories.NET * 0.10",,PE004,"aguinaldo = 0
+antiguedad_anos = contract.antiguedad_anos
+dias_aguinaldo = 0
+dias_proporcionales = 0
+dias_trabajo = 0
+
+if contract.antiguedad_anos < 1:
+   antiguedad_anos = 1
+else:
+   antiguedad_anos = contract.antiguedad_anos
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','<=',antiguedad_anos)],order='antiguedad desc',limit=1)
+    if line:
+       dias_aguinaldo = line.aguinaldo
+
+if worked_days.WORK100:
+   dias_trabajo = dias_trabajo + worked_days.WORK100.number_of_days
+if worked_days.SEPT:
+   dias_trabajo = dias_trabajo + worked_days.SEPT.number_of_days
+if worked_days.FJC:
+   dias_trabajo = dias_trabajo + worked_days.FJC.number_of_days
+if worked_days.VAC:
+   dias_trabajo = dias_trabajo + worked_days.VAC.number_of_days
+if worked_days.INC_MAT:
+   dias_trabajo = dias_trabajo + worked_days.INC_MAT.number_of_days
+#if worked_days.INC_EG:
+#   dias_trabajo = dias_trabajo + worked_days.INC_EG.number_of_days
+if worked_days.INC_RT:
+   dias_trabajo = dias_trabajo + worked_days.INC_RT.number_of_days
+
+if dias_trabajo > 0:
+   if dias_trabajo > 365:
+       dias_trabajo = 365
+   dias_proporcionales = (dias_aguinaldo*dias_trabajo)/365
+   total = dias_proporcionales * contract.sueldo_diario
+
+monto_exento =  contract.tablas_cfdi_id.uma * 30
+
+if total > monto_exento:
+   result = round(monto_exento,2)
+else:
+   result = round(total,2)",,False,Efectivo,0,,,False,False,contract.wage,0,Aguinaldo exenta,,,,False,False,0,,115,Todo el monto,,Python Code,
+payroll_itadmin_rule.aguinaldo_liq_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if worked_days.AGUI:
+   result = 1
+else:
+   result = 0",,PG004,"aguinaldo = 0
+antiguedad_anos = contract.antiguedad_anos
+dias_aguinaldo = 0
+dias_proporcionales = 0
+
+if contract.antiguedad_anos < 1:
+   antiguedad_anos = 1
+else:
+   antiguedad_anos = contract.antiguedad_anos
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','<=',antiguedad_anos)],order='antiguedad desc',limit=1)
+    if line:
+       dias_aguinaldo = line.aguinaldo
+
+if worked_days.AGUI:
+   total = contract.sueldo_diario * worked_days.AGUI.number_of_days
+
+monto_exento =  contract.tablas_cfdi_id.uma * 30
+
+if total > monto_exento:
+   result = round(total - monto_exento, 2)
+else:
+   result = 0",,False,Efectivo,17849.34,,,False,False,contract.wage,0,Aguinaldo liquidacion gravada,,,,False,False,0,,116,Todo el monto,,Python Code,
+payroll_itadmin_rule.aguinaldo_gr,payroll_itadmin_category.ALW1,ALW1,Always True,"
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days
+                    # inputs: object containing the computed inputs
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = rules.NET > categories.NET * 0.10",,PG004,"aguinaldo = 0
+antiguedad_anos = contract.antiguedad_anos
+dias_aguinaldo = 0
+dias_proporcionales = 0
+dias_trabajo = 0
+
+if contract.antiguedad_anos < 1:
+   antiguedad_anos = 1
+else:
+   antiguedad_anos = contract.antiguedad_anos
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','<=',antiguedad_anos)],order='antiguedad desc',limit=1)
+    if line:
+       dias_aguinaldo = line.aguinaldo
+
+if worked_days.WORK100:
+   dias_trabajo = dias_trabajo + worked_days.WORK100.number_of_days
+if worked_days.SEPT:
+   dias_trabajo = dias_trabajo + worked_days.SEPT.number_of_days
+if worked_days.FJC:
+   dias_trabajo = dias_trabajo + worked_days.FJC.number_of_days
+if worked_days.VAC:
+   dias_trabajo = dias_trabajo + worked_days.VAC.number_of_days
+if worked_days.INC_MAT:
+   dias_trabajo = dias_trabajo + worked_days.INC_MAT.number_of_days
+#if worked_days.INC_EG:
+#   dias_trabajo = dias_trabajo + worked_days.INC_EG.number_of_days
+if worked_days.INC_RT:
+   dias_trabajo = dias_trabajo + worked_days.INC_RT.number_of_days
+
+if dias_trabajo > 0:
+   if dias_trabajo > 365:
+       dias_trabajo = 365
+   dias_proporcionales = (dias_aguinaldo*dias_trabajo)/365
+   total = dias_proporcionales * contract.sueldo_diario
+
+monto_exento =  contract.tablas_cfdi_id.uma * 30
+
+if total > monto_exento:
+   result = round(total - monto_exento,2)
+else:
+   result = 0",,False,Efectivo,0,,,False,False,contract.wage,0,Aguinaldo gravada,,,,False,False,0,,116,Todo el monto,,Python Code,
+payroll_itadmin_rule.prima_vac_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if worked_days.VAC  and contract.tipo_prima_vacacional == '02' and not payslip.nom_liquidacion:
+   result = 1
+else:
+   result = 0",,PE010,"total = 0
+dias_vacaciones = 0
+
+if contract.antiguedad_anos < 1:
+   antiguedad = 1
+else:
+   antiguedad = contract.antiguedad_anos
+
+if worked_days.VAC:
+   line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','<=',antiguedad)],order='antiguedad desc',limit=1)
+   if line:
+      prima_vac = line.prima_vac/100
+   total = contract.sueldo_diario*worked_days.VAC.number_of_days*prima_vac
+else:
+   total = 0
+
+monto_exento = 15 * contract.tablas_cfdi_id.uma
+if contract.tablas_cfdi_id:
+   line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','<=',antiguedad)],order='antiguedad desc',limit=1)
+   if line:
+      dias_vacaciones = line.vacaciones
+
+monto_max = monto_exento / dias_vacaciones * worked_days.VAC.number_of_days
+if total > monto_max:
+      result = round(monto_max,2)
+else:
+      result = round(total,2)",,False,Efectivo,0,,,False,False,contract.wage,0,Prima vacacional exento,,,,False,False,25,103,135,Todo el monto,,Python Code,catalogo.percepciones16
+payroll_itadmin_rule.prima_vac_com_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if worked_days.PVC:
+   result = 1
+else:
+   result = 0",,PE010,"total = 0
+
+if contract.antiguedad_anos < 1:
+   antiguedad = 1
+else:
+   antiguedad = contract.antiguedad_anos
+
+if worked_days.PVC:
+   line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','<=',antiguedad)],order='antiguedad desc',limit=1)
+   if line:
+      prima_vac = line.prima_vac/100
+   total = contract.sueldo_diario*worked_days.PVC.number_of_days
+else:
+  total = 0
+
+acum_exento = payslip.env['hr.payslip'].anual(employee, contract, payslip.date_from, 'PE010')
+monto_exento =  contract.tablas_cfdi_id.uma * 15 - acum_exento
+if monto_exento < 0:
+     monto_exento = 0
+
+if total > monto_exento:
+   result =  round(monto_exento,2)
+else:
+  result = round(total,2)",,False,Efectivo,0,,,False,False,contract.wage,0,Prima vacacional completo exento,,,,False,False,25,103,135,Todo el monto,,Python Code,catalogo.percepciones16
+payroll_itadmin_rule.prima_vac_liq_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if worked_days.VAC:
+   result = 1
+else:
+   result = 0",,PE010,"if contract.antiguedad_anos < 1:
+   antiguedad = 1
+else:
+   antiguedad = contract.antiguedad_anos
+
+if worked_days.VAC:
+   line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','<=',antiguedad)],order='antiguedad desc',limit=1)
+   if line:
+      prima_vac = line.prima_vac/100
+   total = contract.sueldo_diario*worked_days.VAC.number_of_days*prima_vac
+else:
+  total = 0
+
+monto_exento =  contract.tablas_cfdi_id.uma * 15
+
+if total > monto_exento:
+   result =  round(monto_exento,2)
+else:
+  result = round(total,2)",,False,Efectivo,0,,,False,False,contract.wage,0,Prima vacacional liquidación exento,,,,False,False,25,,135,Todo el monto,,Python Code,catalogo.percepciones16
+payroll_itadmin_rule.prima_vac_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if worked_days.VAC  and contract.tipo_prima_vacacional == '02' and not payslip.nom_liquidacion:
+   result = 1
+else:
+   result = 0",,PG010,"total = 0
+dias_vacaciones = 0
+if contract.antiguedad_anos < 1:
+   antiguedad = 1
+else:
+   antiguedad = contract.antiguedad_anos
+
+if worked_days.VAC:
+   line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','<=',antiguedad)],order='antiguedad desc',limit=1)
+   if line:
+      prima_vac = line.prima_vac/100
+   total = contract.sueldo_diario*worked_days.VAC.number_of_days*prima_vac
+else:
+   total = 0
+
+monto_exento = 15 * contract.tablas_cfdi_id.uma
+if contract.tablas_cfdi_id:
+       line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','<=',antiguedad)],order='antiguedad desc',limit=1)
+       if line:
+          dias_vacaciones = line.vacaciones
+
+monto_max = monto_exento / dias_vacaciones * worked_days.VAC.number_of_days
+if total > monto_max:
+      result = round(total - monto_max,2)
+else:
+      result = 0",,False,Efectivo,0,,,False,False,contract.wage,0,Prima vacacional gravado,,,,False,False,25,103,136,Todo el monto,,Python Code,catalogo.percepciones16
+payroll_itadmin_rule.prima_vac_com_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if worked_days.PVC:
+   result = 1
+else:
+   result = 0",,PG010,"if contract.antiguedad_anos < 1:
+   antiguedad = 1
+else:
+   antiguedad = contract.antiguedad_anos
+
+if worked_days.PVC:
+   line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','<=',antiguedad)],order='antiguedad desc',limit=1)
+   if line:
+      prima_vac = line.prima_vac/100
+   total = contract.sueldo_diario*worked_days.PVC.number_of_days
+else:
+  total = 0
+
+acum_exento = payslip.env['hr.payslip'].anual(employee, contract, payslip.date_from, 'PE010')
+monto_exento =  contract.tablas_cfdi_id.uma * 15 - acum_exento
+if monto_exento < 0:
+     monto_exento = 0
+
+if total > monto_exento:
+   result =  round(total - monto_exento,2)
+else:
+   result = 0",,False,Efectivo,0,,,False,False,contract.wage,0,Prima vacacional completo gravado,,,,False,False,25,103,136,Todo el monto,,Python Code,catalogo.percepciones16
+payroll_itadmin_rule.prima_vac_liq_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if worked_days.VAC:
+   result = 1
+else:
+   result = 0",,PG010,"if contract.antiguedad_anos < 1:
+   antiguedad = 1
+else:
+   antiguedad = contract.antiguedad_anos
+
+if worked_days.VAC:
+#  result = int(round(contract.sueldo_diario*worked_days.VAC.number_of_days*0.25))
+   line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','<=',antiguedad)],order='antiguedad desc',limit=1)
+   if line:
+      prima_vac = line.prima_vac/100
+   total = contract.sueldo_diario*worked_days.VAC.number_of_days*prima_vac
+else:
+  total = 0
+
+monto_exento =  contract.tablas_cfdi_id.uma * 15
+
+if total > monto_exento:
+   result =  round(total - monto_exento,2)
+else:
+   result = 0",,False,Efectivo,0,,,False,False,contract.wage,0,Prima vacacional liquidación gravado,,,,False,False,25,,136,Todo el monto,,Python Code,catalogo.percepciones16
+payroll_itadmin_rule.reparto_utilidad_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if inputs.PTU:
+   result = 1
+else:
+   result = 0",,PE011,"total = 0
+if inputs.PTU:
+   total = inputs.PTU.amount
+
+monto_exento = contract.tablas_cfdi_id.uma * 15 
+
+if total > monto_exento:
+   result = round(monto_exento, 2)
+else:
+   result = round(inputs.PTU.amount, 2)",,False,Efectivo,0,,,False,False,contract.wage,0,Reparto de utilidades exento,,,,False,False,25,103,140,Todo el monto,,Python Code,
+payroll_itadmin_rule.reparto_utilidad_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if inputs.PTU:
+   result = 1
+else:
+   result = 0",,PG011,"total = 0
+if inputs.PTU:
+   total = inputs.PTU.amount
+
+monto_exento = contract.tablas_cfdi_id.uma * 15 
+
+if total > monto_exento:
+   result = round(total - monto_exento, 2)
+else:
+   result = 0",,False,Efectivo,0,,,False,False,contract.wage,0,Reparto de utilidades gravado,,,,False,False,25,103,141,Todo el monto,,Python Code,
+payroll_itadmin_rule.prima_dominical_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if worked_days.PDM or worked_days.P019:
+   result = 1 
+else:
+   result = 0",,PE019,"total = 0
+dias = 0
+
+if worked_days.PDM:
+  total = contract.sueldo_diario*worked_days.PDM.number_of_days*0.25
+  dias = worked_days.PDM.number_of_days
+if worked_days.P019:
+  total = contract.sueldo_diario*worked_days.P019.number_of_days*0.25
+  dias = worked_days.P019.number_of_days
+
+monto_exento = dias * contract.tablas_cfdi_id.uma
+if total > monto_exento:
+      result = round(monto_exento,2)
+else:
+      result = round(total,2)",,False,Efectivo,0,,,False,False,contract.wage,0,Prima dominical exento,,,,False,False,0,,165,Todo el monto,,Python Code,catalogo.percepciones15
+payroll_itadmin_rule.prima_dominical_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if worked_days.PDM or worked_days.P019:
+   result = 1 
+else:
+   result = 0",,PG019,"total = 0
+dias = 0
+
+if worked_days.PDM:
+  total = contract.sueldo_diario*worked_days.PDM.number_of_days*0.25
+  dias = worked_days.PDM.number_of_days
+if worked_days.P019:
+  total = contract.sueldo_diario*worked_days.P019.number_of_days*0.25
+  dias = worked_days.P019.number_of_days
+
+monto_exento = dias * contract.tablas_cfdi_id.uma
+if total > monto_exento:
+   result = round(total - monto_exento,2)
+else:
+   result = 0",,False,Efectivo,0,,,False,False,contract.wage,0,Prima dominical gravado,,,,False,False,0,,166,Todo el monto,,Python Code,catalogo.percepciones15
+payroll_itadmin_rule.descanso_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if worked_days.DFES or worked_days.DFES_3:
+   result = 1
+else:
+   result = 0",,P022E,"total = 0
+monto_exento = 0
+
+if worked_days.DFES:
+  total = contract.sueldo_diario*worked_days.DFES.number_of_days * 2
+if worked_days.DFES_3:
+  total = total + contract.sueldo_diario*worked_days.DFES_3.number_of_days * 3
+
+#revisar si el trabajador gana mas de un salario mínimo
+if contract.sueldo_diario > contract.tablas_cfdi_id.uma:
+   monto_exento =  total * 0.5
+
+#revisar que lo exento no supere 5 SM
+if monto_exento > (5 *contract.tablas_cfdi_id.uma):
+   monto_exento =  5 *contract.tablas_cfdi_id.uma
+
+result = round(monto_exento, 2)",,False,Efectivo,0,,,False,False,contract.wage,0,Descanso-Festivo laborado exento,,,,False,False,0,,175,Todo el monto,,Python Code,
+payroll_itadmin_rule.descanso_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if worked_days.DFES or worked_days.DFES_3:
+   result = 1
+else:
+   result = 0",,P022G,"total = 0
+monto_exento = 0
+
+if worked_days.DFES:
+  total = contract.sueldo_diario*worked_days.DFES.number_of_days * 2
+  monto_exento = contract.sueldo_diario*worked_days.DFES.number_of_days * 2
+if worked_days.DFES_3:
+  total = total + contract.sueldo_diario*worked_days.DFES_3.number_of_days * 3
+  monto_exento = monto_exento + contract.sueldo_diario*worked_days.DFES_3.number_of_days * 3
+
+#revisar si el trabajador gana mas de un salario mínimo
+if contract.sueldo_diario > contract.tablas_cfdi_id.uma:
+   monto_exento =  monto_exento * 0.5
+
+#revisar que lo exento no supere 5 SM
+if monto_exento > (5 *contract.tablas_cfdi_id.uma):
+   monto_exento =  5 *contract.tablas_cfdi_id.uma
+
+result = round(total  - monto_exento, 2)",,False,Efectivo,0,,,False,False,contract.wage,0,Descanso-Festivo laborado gravado,,,,False,False,0,,176,Todo el monto,,Python Code,
+payroll_itadmin_rule.vale_despensa_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"work = 0
+
+if contract.vale_despensa:
+   if inputs.DESP:
+      if inputs.DESP.amount > 0:
+         result = 1
+
+   if worked_days.VAC:
+      if worked_days.VAC.number_of_days > 0:
+         work = 1
+
+   if worked_days.WORK100:
+      if worked_days.WORK100.number_of_days > 0:
+         work = 1
+
+   if payslip.nom_liquidacion:
+        work = 0
+
+result = work",,PE036,"total = 0
+dias_laborados = 0
+
+if worked_days.WORK100:
+   dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+   dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+   dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+
+if inputs.DESP:
+   if inputs.DESP.amount > 0:
+      total = inputs.DESP.amount
+else:
+   total = contract.tablas_cfdi_id.uma * 0.40 * dias_laborados
+
+acum_despensa = payslip.env['hr.payslip'].mensual(employee, contract, payslip.mes, 'P036')
+acum_total = total + acum_despensa
+monto_exento = contract.tablas_cfdi_id.uma * contract.tablas_cfdi_id.imss_mes
+
+if acum_total > monto_exento:
+      if monto_exento - acum_despensa < 0:
+         result = 0
+      else:
+         result = round(monto_exento - acum_despensa, 2)
+else:
+      result = round(total, 2)",,False,,211.37,,,False,False,contract.wage,0,Vale de despensa exento,,,,False,False,0,,210,Todo el monto,,Python Code,catalogo.percepciones24
+payroll_itadmin_rule.vale_despensa_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"work = 0
+
+if contract.vale_despensa:
+   if inputs.DESP:
+      if inputs.DESP.amount > 0:
+         result = 1
+
+   if worked_days.VAC:
+      if worked_days.VAC.number_of_days > 0:
+         work = 1
+
+   if worked_days.WORK100:
+      if worked_days.WORK100.number_of_days > 0:
+         work = 1
+
+   if payslip.nom_liquidacion:
+        work = 0
+
+result = work",,PG036,"total = 0
+dias_laborados = 0
+
+if worked_days.WORK100:
+   dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+   dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+   dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+
+if inputs.DESP:
+   if inputs.DESP.amount > 0:
+      total = inputs.DESP.amount
+else:
+   total = contract.tablas_cfdi_id.uma *.40 * dias_laborados
+
+acum_despensa = payslip.env['hr.payslip'].mensual(employee, contract, payslip.mes, 'P036')
+acum_total = total + acum_despensa
+monto_exento = contract.tablas_cfdi_id.uma * contract.tablas_cfdi_id.imss_mes
+acum_exento = payslip.env['hr.payslip'].mensual(employee, contract, payslip.mes, 'PE036')
+if acum_total > monto_exento:
+   if acum_exento >= monto_exento: 
+      result = round(total, 2)
+   else:
+      result = round(acum_total - monto_exento, 2)
+else:
+   result = 0",,False,,211.37,,,False,False,contract.wage,0,Vale de despensa gravado,,,,False,False,0,,211,Todo el monto,,Python Code,catalogo.percepciones24
+payroll_itadmin_rule.viaticos_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if inputs.PVIAT:
+   if inputs.PVIAT.amount > 0:
+      result = 1
+   else:
+      result = 0",,PE040,"if inputs.PVIAT:
+   result = inputs.PVIAT.amount
+else:
+   result =0",,False,Efectivo,0,,,False,False,contract.wage,0,Viaticos exento,,,,False,False,0,,220,Todo el monto,,Python Code,
+payroll_itadmin_rule.indemnizacion_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if inputs.IND:
+   result =  1
+else:
+   result = 0",,PE103,"total = 0
+if inputs.IND:
+   total = inputs.IND.amount
+if inputs.PPS:
+   total = total + inputs.PPS.amount
+if inputs.PDA:
+   total = total + inputs.PDA.amount
+
+if contract.antiguedad_anos < 1:
+   antiguedad_anos = 1
+else:
+   antiguedad_anos = round(payslip.env['hr.contract'].antiguedad_to(contract, payslip.date_to))
+
+monto_exento = contract.tablas_cfdi_id.uma * antiguedad_anos * 90 
+
+if total > monto_exento:
+   result = round(monto_exento * (inputs.IND.amount / total),2)
+else:
+   result = inputs.IND.amount
+",,False,Efectivo,0,,,False,False,contract.wage,0,Indemnización exenta,,,,False,False,0,,230,Todo el monto,,Python Code,
+payroll_itadmin_rule.indemnizacion_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if inputs.IND:
+   result =  1
+else:
+   result = 0",,PG103,"total = 0
+if inputs.IND:
+   total = inputs.IND.amount
+if inputs.PPS:
+   total = total + inputs.PPS.amount
+if inputs.PDA:
+   total = total + inputs.PDA.amount
+
+if contract.antiguedad_anos < 1:
+   antiguedad_anos = 1
+else:
+   antiguedad_anos = round(payslip.env['hr.contract'].antiguedad_to(contract, payslip.date_to))
+
+monto_exento = contract.tablas_cfdi_id.uma * antiguedad_anos * 90 
+
+if total > monto_exento:
+   result = round(inputs.IND.amount - monto_exento * (inputs.IND.amount / total),2)
+else:
+   result = 0
+",,False,Efectivo,0,,,False,False,contract.wage,0,Indemnización gravada,,,,False,False,0,,231,Todo el monto,,Python Code,catalogo.percepciones20
+payroll_itadmin_rule.prima_antiguedad_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if inputs.PDA:
+   result =  1
+else:
+   result = 0",,PE104,"total = 0
+if inputs.IND:
+   total = inputs.IND.amount
+if inputs.PPS:
+   total = total + inputs.PPS.amount
+if inputs.PDA:
+   total = total + inputs.PDA.amount
+
+if contract.antiguedad_anos < 1:
+   antiguedad_anos = 1
+else:
+   antiguedad_anos = round(payslip.env['hr.contract'].antiguedad_to(contract, payslip.date_to))
+
+monto_exento = contract.tablas_cfdi_id.uma * antiguedad_anos * 90 
+
+if total > monto_exento:
+   result = round(monto_exento * (inputs.PDA.amount / total),2)
+else:
+   result = round(inputs.PDA.amount,2)",,False,Efectivo,0,,,False,False,contract.wage,0,Prima de antiguedad exento,,,,False,False,0,,235,Todo el monto,,Python Code,
+payroll_itadmin_rule.prima_antiguedad_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if inputs.PDA:
+   result =  1
+else:
+   result = 0",,PG104,"total = 0
+if inputs.IND:
+   total = inputs.IND.amount
+if inputs.PPS:
+   total = total + inputs.PPS.amount
+if inputs.PDA:
+   total = total + inputs.PDA.amount
+
+if contract.antiguedad_anos < 1:
+   antiguedad_anos = 1
+else:
+   antiguedad_anos = round(payslip.env['hr.contract'].antiguedad_to(contract, payslip.date_to))
+
+monto_exento = contract.tablas_cfdi_id.uma * antiguedad_anos * 90 
+
+if total > monto_exento:
+   result = round(inputs.PDA.amount - monto_exento * (inputs.PDA.amount / total),2)
+else:
+   result = 0",,False,Efectivo,0,,,False,False,contract.wage,0,Prima de antiguedad gravado,,,,False,False,0,,236,Todo el monto,,Python Code,catalogo.percepciones17
+payroll_itadmin_rule.pagos_separacion_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if inputs.PPS:
+   result =  1
+else:
+   result = 0",,PE105,"total = 0
+if inputs.IND:
+   total = inputs.IND.amount
+if inputs.PPS:
+   total = total + inputs.PPS.amount
+if inputs.PDA:
+   total = total + inputs.PDA.amount
+
+if contract.antiguedad_anos < 1:
+   antiguedad_anos = 1
+else:
+   antiguedad_anos = round(payslip.env['hr.contract'].antiguedad_to(contract, payslip.date_to))
+
+monto_exento = contract.tablas_cfdi_id.uma * contract.antiguedad_anos * 90 
+
+if total > monto_exento:
+   result = round(monto_exento * (inputs.PPS.amount / total),2)
+else:
+   result = inputs.PPS.amount",,False,Efectivo,0,,,False,False,contract.wage,0,Pagos por separación exento,,,,False,False,0,,240,Todo el monto,,Python Code,catalogo.percepciones18
+payroll_itadmin_rule.pagos_separacion_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if inputs.PPS:
+   result =  1
+else:
+   result = 0",,PG105,"total = 0
+if inputs.IND:
+   total = inputs.IND.amount
+if inputs.PPS:
+   total = total + inputs.PPS.amount
+if inputs.PDA:
+   total = total + inputs.PDA.amount
+
+if contract.antiguedad_anos < 1:
+   antiguedad_anos = 1
+else:
+   antiguedad_anos = round(payslip.env['hr.contract'].antiguedad_to(contract, payslip.date_to))
+
+monto_exento = contract.tablas_cfdi_id.uma * contract.antiguedad_anos * 90 
+
+if total > monto_exento:
+   result = round(inputs.PPS.amount - monto_exento * (inputs.PPS.amount / total),2)
+else:
+   result = 0",,False,Efectivo,0,,,False,False,contract.wage,0,Pagos por separación gravado,,,,False,False,0,,241,Todo el monto,,Python Code,catalogo.percepciones18
+payroll_itadmin_rule.fondo_ahorra_emp_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if worked_days.WORK100 and contract.fondo_ahorro:
+   result = 1
+else:
+   result = 0",,PE041,"total = P001 * .3
+
+monto_exencion = 1.30 * contract.tablas_cfdi_id.uma * contract.tablas_cfdi_id.imss_mes
+if total > monto_exencion:
+   result =round( monto_exencion, 2)
+else:
+   result = round(total, 2)
+",,False,Efectivo,0,,,False,False,contract.wage,0,Fondo ahorro empresa exento,,,,False,False,0,,286,Todo el monto,,Python Code,catalogo.percepciones05
+payroll_itadmin_rule.horas_extra_sim_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if worked_days.HEX1:
+   result = 1
+else:
+   result = 0",,PE006,"if contract.sueldo_diario > contract.tablas_cfdi_id.salario_minimo:
+   result =  round(contract.sueldo_diario/8 * worked_days.HEX1.number_of_hours * 0.5, 2)
+else:
+   result =  round(contract.sueldo_diario/8 * worked_days.HEX1.number_of_hours, 2)",,False,Efectivo,0,,,False,False,contract.wage,0,Horas extras simples exento,,,,False,False,0,,295,Todo el monto,,Python Code,
+payroll_itadmin_rule.fondo_ahorra_emp_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if worked_days.WORK100 and contract.fondo_ahorro:
+   result = 1
+else:
+   result = 0",,PG041,"total = P001 * .3
+
+monto_exencion = 1.30 * contract.tablas_cfdi_id.uma * contract.tablas_cfdi_id.imss_mes
+if total > monto_exencion:
+   result = round(total - monto_exencion, 2)
+else:
+   result = 0",,False,Efectivo,0,,,False,False,contract.wage,0,Fondo ahorro empresa gravado,,,,False,False,0,,287,Todo el monto,,Python Code,catalogo.percepciones05
+payroll_itadmin_rule.horas_extra_sim_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if worked_days.HEX1:
+   result = 1
+else:
+   result = 0",,PG006,"if contract.sueldo_diario > contract.tablas_cfdi_id.salario_minimo:
+   result =  round(contract.sueldo_diario/8 * worked_days.HEX1.number_of_hours * 0.5, 2)
+else:
+   result =  0",,False,Efectivo,0,,,False,False,contract.wage,0,Horas extras simples gravado,,,,False,False,0,,296,Todo el monto,,Python Code,
+payroll_itadmin_rule.pago_fondo_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if inputs.PFA:
+   if inputs.PFA.amount > 0:
+       result = 1
+   else:
+       result = 0
+else:
+   result = 0",,PE042,"monto_exento = 1.3 * contract.tablas_cfdi_id.uma * 365
+
+if inputs.PFA:
+   if inputs.P042.amount < monto_exento:
+      result = round(inputs.PFA.amount, 2)
+   else:
+      result = round(monto_exento, 2)
+else:
+   result =0",,False,Efectivo,0,,,False,False,contract.wage,0,Pago fondo ahorro exento,,,,False,False,0,,300,Todo el monto,,Python Code,catalogo.percepciones05
+payroll_itadmin_rule.pago_fondo_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if inputs.PFA:
+   if inputs.PFA.amount > 0:
+       result = 1
+   else:
+       result = 0
+else:
+   result = 0",,PG042,"monto_exento = 1.3 * contract.tablas_cfdi_id.uma * 365
+
+if inputs.PFA:
+   if inputs.PFA.amount < monto_exento:
+      result = 0
+   else:
+      result = round(inputs.PFA.amount - monto_exento, 2)
+else:
+   result =0",,False,Efectivo,0,,,False,False,contract.wage,0,Pago fondo ahorro gravado,,,,False,False,0,,301,Todo el monto,,Python Code,catalogo.percepciones05
+payroll_itadmin_rule.tiempo_extra_ex,payroll_itadmin_category.ALW2,ALW2,Python Expression,"if inputs.P043:
+   result = 1
+else:
+   result = 0",,PE043,"monto_exento = 0
+horas_exentas = 0
+horas_extras = 0
+monto_total = 0
+monto_max_exento = 0
+
+if contract.periodicidad_pago == '02':
+   horas_exentas = 9
+if contract.periodicidad_pago == '04':
+   horas_exentas = 19.28
+
+monto_max_exento =  contract.sueldo_diario/8 * horas_exentas * 2
+
+#si supera el monto exento maximo
+if inputs.P043.amount > monto_max_exento:
+   monto_exento = monto_max_exento
+   monto_total = inputs.P043.amount - monto_max_exento
+else:
+   monto_exento = inputs.P043.amount
+   monto_total = inputs.P043.amount
+
+#revisar si el trabajador gana mas de un salario mínimo
+if contract.sueldo_diario > contract.tablas_cfdi_id.salario_minimo:
+   monto_exento =  monto_exento * 0.5
+
+#revisar que lo exento no supere 5 SM
+if monto_exento > (5 *contract.tablas_cfdi_id.salario_minimo):
+   monto_exento =  5 *contract.tablas_cfdi_id.salario_minimo
+
+result = round(monto_exento, 2)",,False,Efectivo,0,,,False,False,contract.wage,0,Tiempo extra exento,,,,False,False,0,,305,Todo el monto,,Python Code,
+payroll_itadmin_rule.tiempo_extra_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if inputs.P043:
+   result = 1
+else:
+   result = 0",,PG043,"monto_exento = 0
+horas_exentas = 0
+horas_extras = 0
+monto_total = 0
+
+if contract.periodicidad_pago == '02':
+   horas_exentas = 9
+if contract.periodicidad_pago == '04':
+   horas_exentas = 19.28
+
+monto_max_exento =  contract.sueldo_diario/8 * horas_exentas * 2
+
+#si supera el monto exento maximo
+if inputs.P043.amount > monto_max_exento:
+   monto_exento = monto_max_exento
+   #monto_total = inputs.P043.amount - monto_max_exento
+else:
+   monto_exento = inputs.P043.amount
+   #monto_total = inputs.P043.amount
+
+#revisar si el trabajador gana mas de un salario mínimo
+if contract.sueldo_diario > contract.tablas_cfdi_id.salario_minimo:
+   monto_exento =  monto_exento * 0.5
+
+#revisar que lo exento no supere 5 SM
+if monto_exento > (5 *contract.tablas_cfdi_id.salario_minimo):
+   monto_exento =  5 *contract.tablas_cfdi_id.salario_minimo
+
+result = round(inputs.P043.amount - monto_exento, 2)",,False,Efectivo,0,,,False,False,contract.wage,0,Tiempo extra gravado,,,,False,False,0,,306,Todo el monto,,Python Code,
+payroll_itadmin_rule.horas_extra_tri_gr,payroll_itadmin_category.ALW1,ALW1,Python Expression,"if worked_days.HEX3:
+   result = 1
+else:
+   result = 0",,PG007,"result =  round(contract.sueldo_diario/8 * worked_days.HEX3.number_of_hours * 3, 2)
+",,False,Efectivo,0,,,False,False,contract.wage,0,Horas extras triples gravado,,,,False,False,0,,298,Todo el monto,,Python Code,

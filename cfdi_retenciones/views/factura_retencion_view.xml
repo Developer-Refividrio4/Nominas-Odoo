@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    	<record id="view_cfdi_retencion_form" model="ir.ui.view">
+            <field name="name">CFDI Retencion tree</field>
+            <field name="model">cfdi.retencion</field>
+            <field name="arch" type="xml">
+                <form string="CFDI Retencion">
+                   <header>
+                        <field name="factura_cfdi" invisible="1"/>
+                        <button name="action_valid" type="object" invisible = "state != 'draft'" string="Validar" class="oe_highlight"/>
+                        <button name="action_draft" type="object" invisible = "state != 'cancel'" string="Cambiar a borrador" class="oe_highlight"/>
+                        <button name="action_cancel" string="Cancelar" type="object" invisible="state in ['draft','cancel']"/>
+                        <button name="action_cfdi_generate" type="object" string="Generar CFDI" 
+                            invisible = "factura_cfdi == True or state not in ('valid')"
+                            class="oe_highlight" groups="base.group_user"/>
+                    <button name="%(cdfi_invoice.reason_cancelation_sat_wizard)d"
+                            type="action" 
+                            string="Cancelar CFDI" 
+                            invisible = "factura_cfdi == False or estado_factura in ('solicitud_cancelar', 'factura_cancelada', 'solicitud_rechazada')" 
+                            class="oe_highlight" 
+                            groups="base.group_user"/>
+                        <button name="send_factura_mail" class="oe_highlight" invisible = "estado_factura == 'factura_no_generada'" string="Enviar por correo-e" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,valid,cancel" />
+                   </header>
+                   <sheet>
+                   <div>
+                    <h1 class="mt0">
+                       <field name="number" class="oe_inline"/>
+                    </h1>
+                   </div>
+                   <group>
+                    <group>
+                        <field name="partner_id" readonly ="state == 'valid'"/>
+                        <field name="retencion" readonly ="state == 'valid'"/>
+                    </group>
+                    <group>
+                        <field name="invoice_date" readonly ="state == 'valid'"/>
+                        <field name="periodo_inicio" readonly ="state == 'valid'"/>
+                        <field name="periodo_final" readonly ="state == 'valid'"/>
+                        <field name="ejercicio" readonly ="state == 'valid'"/>
+                    </group>
+                    </group>
+                    <notebook>
+                        <page name="retencion_line_factura" string="Impuesto retenido">
+                            <field name="retencion_line_ids" readonly ="state == 'valid'">
+                              <tree editable="bottom">
+                                <control>
+                                    <create string="Agregar línea"/>
+                                </control>
+                                <field name="impuesto"/>
+                                <field name="tipo_pago"/>
+                                <field name="monto_base"/>
+                                <field name="monto_exento"/>
+                                <field name="monto_gravado"/>
+                                <field name="monto_retenido"/>
+                              </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="currency_id" invisible="1"/>
+                                <field name="amount_operation" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="amount_exento" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                                <field name="amount_gravado" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="amount_retenido" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                        </page>
+                        <page name="info_adicional" string="Información Adicional">
+                            <group cols="4">
+                                <group string="Detalles de Pago">
+                                    <field name="company_id" readonly ="state == 'valid'"/>
+                                    <field name="journal_id" readonly ="state == 'valid'"/>
+                                   <!--<field name="pricelist_id"/>-->
+                                    <field name="currency_id" string="Moneda" readonly ="state == 'valid'"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="info_cdfi" string="CFDI">
+                            <group cols="4">
+                                <group  string="Detalles de Factura">
+                                    <field name="folio_fiscal"/>
+                                    <field name="estado_factura"/>
+                                    <field name="fecha_factura" readonly ="state == 'valid'"/>
+                                    <field name="proceso_timbrado"/>
+                                </group>
+                                <group  string="Complementos"> <!--
+                                    <field name="complemento_a"/>
+                                    <field name="complemento_b"/>-->
+                                    <field name="complemento_c"/> <!--
+                                    <field name="complemento_d"/>
+                                    <field name="complemento_e"/>
+                                    <field name="complemento_f"/>-->
+                                    <field name="complemento_g"/>
+                                    <!--<field name="complemento_h"/>
+                                    <field name="complemento_i"/>
+                                    <field name="complemento_j"/>-->
+                                </group>
+                                <group  string="CFDI Relacionados">
+                                    <field name="tipo_relacion" readonly ="state == 'valid'"/>
+                                    <field name="uuid_relacionado" readonly ="state == 'valid'"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page name="dividendos" string="Dividendos" invisible = "complemento_c == False">
+                            <group cols="4">
+                                <group string="Dividendos o utilidad">
+                                    <field name="tipo_diviendo" readonly ="state == 'valid'"/>
+                                    <field name="montisracredmx" readonly ="state == 'valid'"/>
+                                    <field name="montisracredex" readonly ="state == 'valid'"/>
+                                    <field name="montretex" readonly ="state == 'valid'"/>
+                                    <field name="tiposocdistr" readonly ="state == 'valid'"/>
+                                    <field name="montisracrednal" readonly ="state == 'valid'"/>
+                                    <field name="montdivacumnal" readonly ="state == 'valid'"/>
+                                    <field name="montdivacumnex" readonly ="state == 'valid'"/>
+                                </group>
+                                <group string="Remanente">
+                                    <field name="div_remanente" readonly ="state == 'valid'"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page name="dividendos" string="Pagos a extanjeros" invisible = "complemento_g == False">
+                            <group cols="4">
+                                <group string="Pagos a extanjeros">
+                                    <field name="benefefectdelcobro" readonly ="state == 'valid'"/>
+                                    <field name="pais_residencia" readonly ="state == 'valid'" invisible="benefefectdelcobro == 'SI'" />
+                                    <field name="concepto_pago" readonly ="state == 'valid'"/>
+                                    <field name="descripcion_concepto" readonly ="state == 'valid'"/>
+                                    <field name="rfc_beneficiario" readonly ="state == 'valid'" invisible="benefefectdelcobro == 'NO'"/>
+                                    <field name="curp_beneficiario" readonly ="state == 'valid'" invisible="benefefectdelcobro == 'NO'"/>
+                                    <field name="razon_social_beneficiario" readonly ="state == 'valid'" invisible="benefefectdelcobro == 'NO'"/>
+                                </group>
+                            </group>
+                        </page>
+
+                    </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+    
+    	<record id="view_cfdi_retencion_tree" model="ir.ui.view">
+            <field name="name">CFDI Retencion tree</field>
+            <field name="model">cfdi.retencion</field>
+            <field name="arch" type="xml">
+                <tree string="CFDI Retencion" default_order="invoice_date desc">
+                	<field name="currency_id" invisible="1"/>
+                    <field name="number" string="Número"/>
+                    <field name="invoice_date" string="Fecha de factura"/>
+                   	<field name="partner_id" string="Cliente"/>
+                    <field name="amount_retenido" sum="amount total" widget="monetary" options="{'currency_field': 'currency_id'}" string="Total retenido"/>
+                    <field name="estado_factura" string="Estado factura"/>
+                    <field name="state" string="Estado"/>
+                </tree>
+            </field>
+        </record>
+    	 <record id="action_cfdi_retencion_tree" model="ir.actions.act_window">
+            <field name="name">CFDI Retencion</field>
+            <field name="res_model">cfdi.retencion</field>
+            <!--<field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_cfdi_retencion_tree"/>
+        </record>
+    	<menuitem id="customer_sub_menu_cfdi_retencion" name="CFDI Retenciones" action="action_cfdi_retencion_tree" parent="account.menu_finance_receivables" sequence="111"/>
+    </data>
+</odoo>

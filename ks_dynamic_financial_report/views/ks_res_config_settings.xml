@@ -1,0 +1,65 @@
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="ks_dfr_res_config_settings_view_form_inherited" model="ir.ui.view">
+        <field name="name">res.config.settings.inherited</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//block[@name='default_taxes_setting_container']" position="after">
+                <h2>DFR</h2>
+                <div class="row mt16 o_settings_container" name="ks_dfr_settings">
+                    <div class="col-12 col-lg-6 o_setting_box" id="ks_enable_ledger_in_bal_settings">
+                        <div class="o_setting_left_pane">
+                            <field name="ks_enable_ledger_in_bal"/>
+                        </div>
+                        <div class="o_setting_right_pane" name="ks_enable_ledger_in_bal_right_panel">
+                            <label for="ks_enable_ledger_in_bal" string="Enable Ledger Initial Balance"/>
+                            <div class="text-muted">
+                                Enable initial balance in partner/general Ledger.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 o_setting_box" id="ks_enable_ledger_in_bal_settings">
+                        <div class="o_setting_right_pane">
+                            <field name="ks_disable_trial_en_bal"/>
+                        </div>
+                        <div class="o_setting_right_pane" name="ks_enable_ledger_in_bal_right_panel">
+                            <label for="ks_disable_trial_en_bal" string="Disable Trial Initial Balance"/>
+                            <div class="text-muted">
+                                Disable initial balance from income/expense account.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 o_setting_box" id="ks_disable_bs_sign_settings">
+                        <div class="o_setting_left_pane">
+                            <field name="ks_disable_bs_sign"/>
+                        </div>
+                        <div class="o_setting_right_pane" name="ks_disable_bs_sign_left_panel">
+                            <label for="ks_disable_bs_sign" string="Disable Balance Sheet Sign"/>
+                            <div class="text-muted">
+                                Disable negative signs for Assets and Liabilities from the balance sheet.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 o_setting_box" id="ks_enable_net_tax_settings">
+                        <div class="o_setting_right_pane">
+                            <field name="ks_enable_net_tax"/>
+                        </div>
+                        <div class="o_setting_right_pane" name="ks_enable_net_tax_right_panel">
+                            <label for="ks_enable_net_tax" string="Enable Net Tax"/>
+                            <div class="text-muted">
+                                Enable net tax on tax report.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

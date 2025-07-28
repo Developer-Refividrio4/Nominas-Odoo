@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <!--<t t-name="custom_invoice.ReceiptHeader" t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
+         <xpath expr="//div[@class='pos-receipt-contact']" position="replace"/>
+    </t>-->
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+        <xpath expr="//OrderWidget" position="before">
+            <div style='text-align:center'>
+                <t t-if="env.services.pos.get_order().is_to_invoice() and props.data.selo_digital_cdfi">
+                    <t t-esc="props.data.nombre_fiscal"/><br/>
+                </t>
+                <t t-if="env.services.pos.get_order().is_to_invoice() and props.data.selo_digital_cdfi">
+                    Lugar de expedicion: <t t-esc="props.data.expedicion || ''"/><br />
+                    Tipo de comprobante: <t t-esc="props.data.tipo_comprobante || ''"/><br/>
+                    Fecha de emisión: <t t-esc="props.data.date" /><br />
+                    Folio factura: <t t-esc="props.data.folio_factura || ''"/><br />
+                </t>
+            </div>
+            <t t-if="env.services.pos.get_order().is_to_invoice() and props.data.selo_digital_cdfi">
+                <div style='text-align:center; border-top-style:solid'>
+                   Nombre del cliente: <t t-esc="props.data.client_name || ''"/><br />
+                   RFC del cliente: <t t-esc="props.data.client_rfc || ''"/><br />
+                   Uso CFDI: <t t-esc="props.data.uso_cfdi_id || ''"/>
+                </div>
+            </t>
+            <br/>
+        </xpath>
+        <xpath expr="//div[@t-if='props.data.ticket_code']" position="replace">
+            <div t-if="props.data.ticket_code">
+                <br /><br />
+                <div class="pos-receipt-order-data">
+                    Puede ingresar a <t t-out="props.data.base_url"/>/portal/facturacliente/ y usar el código que está abajo para solicitar la factura de su compra.
+                </div>
+                <div class="pos-receipt-order-data">
+                    Unique Code: <t t-out="props.data.ticket_code"/>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//t[@t-if='props.data.shippingDate']" position="after">
+               <t t-if="env.services.pos.get_order().is_to_invoice() and props.data.selo_digital_cdfi">
+                   <table class='receipt-factura-cfdi' style="font-size:11px; border-top-style:solid;width: 100%;">
+                        <colgroup>
+                            <col width='40%' />
+                            <col width='60%' />
+                        </colgroup>
+                        <tr>
+                           <td>
+                              <strong>Método de pago</strong>
+                           </td>
+                           <td>
+                              <span t-esc="props.data.methodo_pago"/>
+                           </td>
+                        </tr>
+                       <tr>
+                           <td>
+                              <strong>Régimen fiscal</strong>
+                           </td>
+                           <td>
+                              <span t-esc="props.data.regimen_fiscal" />
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <strong>Forma de pago</strong>
+                           </td>
+                           <td >
+                              <span t-esc="props.data.forma_pago_id" />
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <strong>No. certificado</strong>
+                           </td>
+                           <td>
+                              <span t-esc="props.data.numero_cetificado" />
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <strong>Moneda</strong>
+                           </td>
+                           <td>
+                              <span t-esc="props.data.moneda" />
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <strong>Certificado SAT</strong>
+                           </td>
+                           <td>
+                              <span t-esc="props.data.cetificaso_sat" />
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <strong>Tipo de cambio</strong>
+                           </td>
+                           <td>
+                              <span t-esc="props.data.tipocambio" />
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <strong>Folio fiscal</strong>
+                           </td>
+                           <td>
+                              <span t-esc="props.data.folio_fiscal"/>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <strong>Fecha y hora de certificación</strong>
+                           </td>
+                           <td >
+                              <span t-esc="props.data.fecha_certificacion"/>
+                           </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <div style="font-size:12px;">
+                       <strong>Cadena Original del Complemento digital del SAT</strong>
+                    </div>
+                   <div style="font-size:10px; word-break: break-all; word-wrap: break-word;'">
+                       <span t-esc="props.data.cadena_origenal" />
+                    </div>
+                    <br/>
+                    <div style="font-size:12px;">
+                       <strong>Sello Digital del CFDI</strong>
+                    </div>
+                    <div style="font-size:10px; word-break: break-all; word-wrap: break-word;'">
+                       <span t-esc="props.data.selo_digital_cdfi" />
+                    </div>
+                    <br/>
+                    <div style="font-size:12px;">
+                       <strong>Sello digital del SAT</strong>
+                    </div>
+                    <div style="font-size:10px; word-break: break-all; word-wrap: break-word;'">
+                       <span t-esc="props.data.selo_sat" />
+                    </div>
+                    <div>
+                        <center>
+                            <t t-if="props.data.invoice_id">
+                                       <img t-attf-src="/web/image?model=account.move&amp;id={{props.data.invoice_id}}&amp;field=qrcode_image"
+                                            style="width:50%"/>
+                            </t>
+                        </center>
+
+                    </div>
+                    <div style="font-size:12px;">
+                       <center>
+                          <strong>
+                             ESTE DOCUMENTO ES UNA REPRESENTACIÓN IMPRESA DE UN CFDI
+                          </strong>
+                       </center>
+                    </div>
+               </t>
+      <!--          <t t-if="!env.services.pos.get_order().is_to_invoice()">
+                    <div style='text-align:center; border-top-style:solid'>
+                        <t t-esc="props.data.headerData.company.name"/><br/>
+                        <t t-esc="props.data.headerData.company.street || ''"/>, <t t-esc="props.data.headerData.company.street2 || ''"/> <br/>
+                        <t t-esc="props.data.headerData.company.city || ''"/> <t t-esc="props.data.headerData.company.state_id.name || ''"/> <t t-esc="props.data.headerData.company.zip || ''"/><br/>
+                    </div>
+           </t>-->
+         </xpath>
+    </t>
+</templates>

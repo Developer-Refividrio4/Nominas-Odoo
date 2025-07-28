@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_generar_polizas_form" model="ir.ui.view">
+        <field name="name">Generar.Polizas.form</field>
+        <field name="model">generate.policies.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generar polizas">
+                <group>
+                    <field name="diario"/>
+                    <field name="cuenta_de_ingreso"/>
+                    <!--<field name="group_entry"/> -->
+                </group>
+                <footer>
+                    <button string="Generar" type="object" name="create_journal_entry" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_generar_polizas_wizard" model="ir.actions.act_window">
+        <field name="name">Generar polizas</field>
+        <field name="res_model">generate.policies.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_generar_polizas_form"/>
+    </record>
+
+    <record id="action_generar_polizas" model="ir.actions.server">
+    	<field name="name">Generar polizas</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="base.model_ir_attachment"/>
+        <field name="binding_model_id" ref="base.model_ir_attachment"/>
+        <field name="code">
+            action = env['ir.actions.act_window']._for_xml_id('l10n_mx_sat_sync_itadmin.action_generar_polizas_wizard')
+        </field>
+    </record>
+
+</odoo>

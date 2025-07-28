@@ -1,0 +1,93 @@
+<section class="oe_container oe_dark">
+   <meta charset="utf-8"> 
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Factura global + facturación desde POS (CFDI 4.0)</h2>
+            <h3 class="oe_slogan">Timbrado electrónico desde el punto de venta gráfico y creación de facturas globales</h3>
+            <h4 class="oe_slogan">Configuración</h4>
+            <div class="oe_screenshot" style="text-align: left;">
+
+               <li>Configurar los métodos de pago agregando la forma y método de pago para cada uno, requerido para timbrado desde el POS gráfico.  </li>
+               <img style="max-width: 100%;" src="pos01.png"/><br /><br />
+
+               <li>Configuración opcional para creación de facturas globales.  </li>
+               <ul>
+                   <li>Crear notas de crédito en devoluciones: Si no se habilita pedidos de devolución y los pedidos que lo originan no se agregan a la factura global. Si se habilita se agrega el pedido origen de la devolución a la factura global y adicionalmente se crea una nota de crédito por la devolución.
+                   </li>
+                   <li>Utilizar códigos de ticket en FG. Si no se habilita se utiliza el número de recibo en la creación de la factura global. Si se habilita se utiliza el código del ticket para la factura global.</li>
+                   <li>No cambiar cliente del recibo al hacer factura global. Si no se habilita al crear la factura global a los pedidos que lo componen se le coloca el cliente utilizado para la factura global. Si se habilita no cambia el cliente de los pedidos al generar la factura global.</li>
+               </ul>
+               <img style="max-width: 100%;" src="pos02.png"/><br /><br/>
+
+
+               <h4 class="oe_slogan">Creación de facturas globales</h4>
+               <li style="color:#30054D;">Hay dos formas de generar las facturas globales.  </li>
+               <ul>
+                   <li>En el menú principal del módulo de punto de venta se pueden crear facturas globales utilizando distintos filtros.</li>
+                   <li>Selecionando múltiples pedidos para generar la factura global.</li>
+               </ul>
+               <img style="max-width: 100%;" src="pos03.png"/><br/><br/>
+               <img style="max-width: 100%;" src="pos04.png"/><br/><br/>
+
+               Crear factura global<br/>
+               Se pueden generar facturas globales filtrando los pedidos por medio de fechas.<br/>
+               Adiiconalemnete se pueden filtrar los pedidos por punto de venta, método de pago y seleccionar un monto máximo para la factura global.<br/>
+               <img style="max-width: 100%;" src="pos05.png"/><br /><br/>
+
+               Crear factura sesión<br/>
+               Se pueden generar facturas globales filtrando por sesión.<br/>
+               Adiiconalemnete se pueden filtrar los pedidos por método de pago y seleccionar un monto máximo para la factura global.<br/>
+               <img style="max-width: 100%;" src="pos06.png"/><br /><br/>
+
+               "Facturar en forma"<br/>
+               Se puede seleccionar distintas formas de como se va a generar la factura global.<br/>
+	           <ul>
+                   <li>Detalladas. Agrega todas las líneas de los pedidos en la factura global.</li>
+				   <li>Una partida. La factura global solo va a tener un línea con el monto total de los pedidos.</li>
+                   <li>CFDI. Se crea una línea por cada pedido en la factura global, según el anexo 20 del SAT.</li>
+                   <li>Compacta. Similar a la detallada pero agrupa los productos similares en una misma línea.</li>
+               </ul>
+
+               <b>Las facturas globales se generan en un modelo nuevo el cual es similar a las facturas del sistema.</b><br/>
+               <img style="max-width: 100%;" src="pos07.png"/><br/><br/>
+               <img style="max-width: 100%;" src="pos08.png"/><br/><br/>
+               <img style="max-width: 100%;" src="pos09.png"/><br/><br/>
+
+
+            <h4 class="oe_slogan">Timbrado desde punto de venta gráfico</h4>
+            Al realizar el pago se debe:><br/>
+               <ul>
+                   <li>Seleccionar un cliente que esté configurado con correo electrónico, RFC y régimen fiscal</li>
+                   <li>Habilitar la opción de "Facturación"</li>
+               </ul>
+            <img style="max-width: 100%;" src="pos10.png"/><br/><br/>
+
+            Al seleccionar la opción de facturación aparece una ventana emergente donde se debe seleccionar el uso de CFDI.<br/>
+            <img style="max-width: 100%;" src="pos11.png"/><br/><br/>
+
+            Al avanzar con el pago se timbra el pedido, en el ticket agrega la información fiscal y se envía un correo con la factura y XML generado.<br/>
+            <img style="max-width: 100%;" src="pos12.png"/><br/><br/>
+
+            </div>
+        </div>
+    </div>
+</section>
+<br/>
+<section class="oe_container oe_dark">
+    <div class="oe_row ">
+        <div class="oe_slogan text-center">
+            <a href="http://www.itadmin.com.mx" target="_blank">
+                <img src="logo.png"/>
+            </a>
+            <br/>
+            <div class="oe_span12">
+            <h2 class="text-center"><a>Nosotros</a></h2>
+        </div>
+            <span>
+                <a style="color: #a24689 !important;" href="http://www.itadmin.com.mx" target="_blank">Página web</a> | 
+                <a style="color: #a24689 !important;" href="http://www.itadmin.com.mx/blog/conozca-como-la-tecnologia-ayuda-a-su-negocio-1" target="new">Blog</a> | 
+                <a style="color: #a24689 !important;" href="mailto:info@itadmin.com.mx">E-Mail</a>
+            </span>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="ks_dfr_account_type_tree_view" model="ir.ui.view">
+        <field name="name">ks.dynamic.financial.reports.account.tree.view</field>
+        <field name="model">ks.dynamic.financial.reports.account</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0">
+                <field name="ks_name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="ks_dfr_account_type_action" model="ir.actions.act_window">
+        <field name="name">Account Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ks.dynamic.financial.reports.account</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem id="ks_df_account_type_menu" name="Account Type"
+                  action="ks_dfr_account_type_action"
+                  parent="account.menu_finance_configuration"
+        />
+</odoo>

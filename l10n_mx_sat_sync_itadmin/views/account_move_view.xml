@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_importar_xml" model="ir.actions.server">
+        <field name="name">Importar XML</field>
+        <field name="model_id" ref="model_account_move"/>
+        <field name="binding_model_id" ref="model_account_move"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = {
+            'type': 'ir.actions.act_window',
+            'res_model': 'multi.file.attach.xmls.wizard',
+            'target': 'new',
+            'domain': [('id', '=', record.id)],
+            'views': [(env.ref('l10n_mx_sat_sync_itadmin.multi_file_attach_xmls_wizard_form_view').id, 'form')],
+            }
+        </field>
+    </record>
+
+    <record id="action_descarga_dia" model="ir.actions.server">
+        <field name="name">Descarga Dia</field>
+        <field name="model_id" ref="model_account_move"/>
+        <field name="binding_model_id" ref="model_account_move"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = {
+            'type': 'ir.actions.act_window',
+            'res_model': 'descarga.x.dia.wizard',
+            'target': 'new',
+            'domain': [('id', '=', record.id)],
+            'views': [(env.ref('l10n_mx_sat_sync_itadmin.view_import_cfdi_invoice_xml_attachment_form').id, 'form')],
+            }
+        </field>
+    </record>
+
+    <record id="action_sincronizar_sat" model="ir.actions.server">
+        <field name="name">Sincronizar SAT</field>
+        <field name="model_id" ref="model_account_move"/>
+        <field name="binding_model_id" ref="model_account_move"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            record.custom_action_sincronizar_sat()
+        </field>
+    </record>
+
+    <record id="action_sincronizar_documentos" model="ir.actions.server">
+        <field name="name">Sincronizar documentos</field>
+        <field name="model_id" ref="model_account_move"/>
+        <field name="binding_model_id" ref="model_account_move"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+                record.custom_action_sincronizar_documentos()
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ks_df_asset_receivable" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Receivable</field>
+            <field name="ks_account_type">asset_receivable</field>
+        </record>
+        <record id="ks_df_asset_cash" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Bank and Cash</field>
+            <field name="ks_account_type">asset_cash</field>
+        </record>
+        <record id="ks_df_asset_current" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Current Assets</field>
+            <field name="ks_account_type">asset_current</field>
+        </record>
+        <record id="ks_df_asset_non_current" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Non-current Assets</field>
+            <field name="ks_account_type">asset_non_current</field>
+        </record>
+        <record id="ks_df_asset_prepayments" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Prepayments</field>
+            <field name="ks_account_type">asset_prepayments</field>
+        </record>
+        <record id="ks_df_asset_fixed" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Fixed Assets</field>
+            <field name="ks_account_type">asset_fixed</field>
+        </record>
+        <record id="ks_df_liability_payable" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Payable</field>
+            <field name="ks_account_type">liability_payable</field>
+        </record>
+        <record id="ks_df_liability_credit_card" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Credit Card</field>
+            <field name="ks_account_type">liability_credit_card</field>
+        </record>
+        <record id="ks_df_liability_current" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Current Liabilities</field>
+            <field name="ks_account_type">liability_current</field>
+        </record>
+        <record id="ks_df_liability_non_current" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Non-current Liabilities</field>
+            <field name="ks_account_type">liability_non_current</field>
+        </record>
+        <record id="ks_df_equity" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Equity</field>
+            <field name="ks_account_type">equity</field>
+        </record>
+        <record id="ks_df_equity_unaffected" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Current Year Earnings</field>
+            <field name="ks_account_type">equity_unaffected</field>
+        </record>
+        <record id="ks_df_income" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Income</field>
+            <field name="ks_account_type">income</field>
+        </record>
+        <record id="ks_df_income_other" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Other Income</field>
+            <field name="ks_account_type">income_other</field>
+        </record>
+        <record id="ks_df_expense_depreciation" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Depreciation</field>
+            <field name="ks_account_type">expense_depreciation</field>
+        </record>
+        <record id="ks_df_expense" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Expenses</field>
+            <field name="ks_account_type">expense</field>
+        </record>
+        <record id="ks_df_expense_direct_cost" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Cost of Revenue</field>
+            <field name="ks_account_type">expense_direct_cost</field>
+        </record>
+        <record id="ks_df_off_balance" model="ks.dynamic.financial.reports.account">
+            <field name="ks_name">Off-Balance Sheet</field>
+            <field name="ks_account_type">off_balance</field>
+        </record>
+    </data>
+</odoo>
